@@ -1,0 +1,12 @@
+/* Custom Cursor */
+.custom-cursor {
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    transition: transform 0.05s linear;
+    box-shadow: 0 0 5px white;
+    transform: translate(-50%, -50%); /* Center on cursor */
+}
