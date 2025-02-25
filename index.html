@@ -13,7 +13,7 @@
             align-items: center;
             background-color: #000000;
             font-family: monospace;
-            color: white;
+            color: blue;
         }
         .ascii-container {
             display: inline-block;
@@ -71,7 +71,7 @@ ______ | (   '    /_/    Trooper   (__/     /   |_______
             const x = e.clientX / window.innerWidth;
             const y = e.clientY / window.innerHeight;
 
-            asciiArt.style.transform = `translate(${x * 100}px, ${y * 100}px) scale(1.2)`;
+            asciiArt.style.transform = `translate(${x * 60}px, ${y * 60}px) scale(1.2)`;
         });
 
         asciiContainer.addEventListener('mouseleave', () => {
