@@ -3,57 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive ASCII Art</title>
-    <link rel="stylesheet" href="style.css">
+    <title>c22w</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: black;
+            font-family: monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .ascii-art {
+            color: red;
+            font-size: 14px;
+            white-space: pre;
+            display: inline-block;
+            text-align: center;
+        }
+        audio {
+            position: absolute;
+            top: -9999px;
+        }
+    </style>
 </head>
 <body>
-    <!-- Admin Tab (Hidden by default) -->
-    <div id="adminTab" class="admin-tab">
-        <h2>Admin Panel</h2>
-        <label for="backgroundUpload">Upload Background:</label>
-        <input type="file" id="backgroundUpload" accept="image/*">
-        <br>
-        <label for="musicUpload">Upload Music:</label>
-        <input type="file" id="musicUpload" accept="audio/*">
-        <br>
-        <button onclick="saveFiles()">Save Files</button>
+    <!-- Background Music -->
+    <audio id="background-music" autoplay loop>
+        <source src="https://c22w.site/Paris.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- ASCII Art -->
+    <div class="ascii-art">
+        __<br>
+        ,::%%n<br>
+        ,-::%%%%%%=. <br>
+        /:::%%%(:  "-:.<br>
+        ,:::%:%%%f:     :<br>
+        f:::%:%%%%,   ."`.<br>
+        i::::%%:%%%%, .',-t<br>
+        j::::::%:%%%%i 'i  `i<br>
+        :::::::%:%%%%%  :_-=". <br>
+        /:::::::%%%%%%%i      t<br>
+        ,:::::::::%%%%%%; .    ]<br>
+        f:::::::::%%%%%;  ,.-= j,-""-.<br>
+        /::::::::::l%%%%f <--"/,'      `. <br>
+        /::::::::::l%%%%;:: "`","         \<br>
+        /:::::::::::l%%%;:-:__.,"           \<br>
+        ;:::::::::::l%%%;::::: /              :<br>
+        j::::::::::::l%%; ' '        .      __,|<br>
+        :::::::;:-''"                `.  ,%8888&n<br>
+        j::::::'  _.                  :`.n88%888&i<br>
+        |:::::+,-"     ,-  _.n%%%n.. :::<&88%888&b<br>
+        |::;+%%%n. ..:/  .n%%%%%%%%%. :::&888%888&<br>
+        |:/%%%%%%%8+:i  +%%%%%*%%%o%%.::::&88%888&<br>
+        `j%%*%%%%*88%|.%%%*%%%%%%%%%%|::::&888%88&i<br>
+        `%%%%%%%%888888%%%%%%%*%%%%8::::::&88%88&H<br>
+        `%o%%%*%8o88888%%%%%%%%%888i::::/|&88%88&i<br>
+        `%%%%%%88888%%%88888888888;:::/ `888%888&<br>
+        `%%%8%%%%%%8888886888*88j::/   H888%88&h<br>
+        i%%*%%%%o%%88888888888i:/    `888%888&<br>
+        `%%%%%%%%%%%8888888888%Y      H888%88&i<br>
+        \%%%%%o%*%%%8888888%%/       `888%888&.<br>
+        `%%*%%%%%%%8888888%j    LS   H888%88&i<br>
+        \%%%%%%%%%%888888%f         i8888%8&t<br>
     </div>
 
-    <!-- Main Content -->
-    <div class="ascii-container" id="asciiContainer">
-        <div class="ascii-art" id="asciiArt">
-            ,n888888n,
-           .8888888888b
-           888888888888nd8P~''8g,
-           88888888888888   _  `'~\.  .n.
-           `Y888888888888. / _  |~\\ (8"8b
-          ,nnn.. 8888888b.  |  \ \m\|8888P
-        ,d8888888888888888b. \8b|.\P~ ~P8~
-        888888888888888P~~_~  `8B_|      |
-        ~888888888~'8'   d8.    ~      _/
-         ~Y8888P'   ~\ | |~|~b,__ __--~
-     --~~\   ,d8888888b.\`\_/ __/~  
-          \_ d88888888888b\_-~8888888bn.
-            \8888P   "Y888888888888"888888bn.
-         /~'\_"__)      "d88888888P,-~~-~888
-        /  / )   ~\     ,888888/~' /  / / 8'
-     .-(  / / / |) )-----------(/ ~  / /  |---.
-______ | (   '    /_/    Trooper   (__/     /   |_______
-\      |   (_(_ ( /~ For President  \___/_/'    |      / 
- \     | Let's put a Trooper in the White House!|     / 
- /     (________________________________________)     \
-/__________)     __--|~mb  ,g8888b.         (__________\
-               _/    8888b(.8P"~'~---__  
-              /       ~~~| / ,/~~~~--, `\  
-             (       ~\,_) (/         ~-_`\  
-              \  -__---~._ \             ~\\
-              (           )\\              ))
-              `\          )  "-_           `| 
-                \__    __/      ~-__   __--~ 
-                   ~~"~             ~~~
-        </div>
-    </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
