@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>im a skid </title>
+    <title>im a skid</title>
     <style>
         body {
             margin: 0;
@@ -14,7 +14,9 @@
             background-color: #000000;
             font-family: monospace;
             color: blue;
+            cursor: url('whitecircleglow.png'), auto; /* Replace with your custom cursor image */
         }
+
         .ascii-container {
             display: inline-block;
             font-size: 20px;
@@ -23,44 +25,59 @@
             cursor: pointer;
             user-select: none;
         }
+
         .ascii-art {
             transition: transform 0.3s ease-out;
+        }
+
+        /* Background music settings */
+        #background-audio {
+            display: none; /* Hide the audio player */
         }
     </style>
 </head>
 <body>
+    <!-- Background music -->
+    <audio id="background-audio" autoplay loop>
+        <source src="Prada.mp3" type="audio/mp3"> <!-- Replace with your music file -->
+        Your browser does not support the audio element.
+    <audio volume 50%>    
+    </audio>
+
+
+    <!-- ASCII Art Container -->
     <div class="ascii-container" id="asciiContainer">
         <div class="ascii-art" id="asciiArt">
-              ,n888888n,
-             .8888888888b
-             888888888888nd8P~''8g,
-             88888888888888   _  `'~\.  .n.
-             `Y888888888888. / _  |~\\ (8"8b
-            ,nnn.. 8888888b.  |  \ \m\|8888P
-          ,d8888888888888888b. \8b|.\P~ ~P8~
-          888888888888888P~~_~  `8B_|      |
-          ~888888888~'8'   d8.    ~      _/
-           ~Y8888P'   ~\ | |~|~b,__ __--~
-       --~~\   ,d8888888b.\`\_/ __/~
-            \_ d88888888888b\_-~8888888bn.
-              \8888P   "Y888888888888"888888bn.
-           /~'\_"__)      "d88888888P,-~~-~888
-          /  / )   ~\     ,888888/~' /  / / 8'
-       .-(  / / / |) )-----------(/ ~  / /  |---.
+            ,n888888n,
+           .8888888888b
+           888888888888nd8P~''8g,
+           88888888888888   _  `'~\.  .n.
+           `Y888888888888. / _  |~\\ (8"8b
+          ,nnn.. 8888888b.  |  \ \m\|8888P
+        ,d8888888888888888b. \8b|.\P~ ~P8~
+        888888888888888P~~_~  `8B_|      |
+        ~888888888~'8'   d8.    ~      _/
+         ~Y8888P'   ~\ | |~|~b,__ __--~
+     --~~\   ,d8888888b.\`\_/ __/~  
+          \_ d88888888888b\_-~8888888bn.
+            \8888P   "Y888888888888"888888bn.
+         /~'\_"__)      "d88888888P,-~~-~888
+        /  / )   ~\     ,888888/~' /  / / 8'
+     .-(  / / / |) )-----------(/ ~  / /  |---.
 ______ | (   '    /_/    Trooper   (__/     /   |_______
-\      |   (_(_ ( /~ For President  \___/_/'    |      /
- \     | Let's put a Trooper in the White House!|     /
+\      |   (_(_ ( /~ For President  \___/_/'    |      / 
+ \     | Let's put Trooper in the White House!  |     / 
  /     (________________________________________)     \
 /__________)     __--|~mb  ,g8888b.         (__________\
-               _/    8888b(.8P"~'~---__
-              /       ~~~| / ,/~~~~--, `\
-             (       ~\,_) (/         ~-_`\
+               _/    8888b(.8P"~'~---__  
+              /       ~~~| / ,/~~~~--, `\  
+             (       ~\,_) (/         ~-_`\  
               \  -__---~._ \             ~\\
               (           )\\              ))
-              `\          )  "-_           `|
-                \__    __/      ~-__   __--~
+              `\          )  "-_           `| 
+                \__    __/      ~-__   __--~ 
                    ~~"~             ~~~
-    </div>
+        </div>
     </div>
 
     <script>
