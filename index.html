@@ -17,26 +17,29 @@
         }
         .ascii-art {
             color: red;
-            font-size: 14px;
+            font-size: 8px; /* Make ASCII art smaller */
             white-space: pre;
             display: inline-block;
             text-align: center;
+            opacity: 1;
+            transition: opacity 0.5s ease; /* Fade effect */
         }
         audio {
             position: absolute;
-            top: -9999px;
+            top: 1px; /* Hide audio controls */
         }
     </style>
 </head>
 <body>
+
     <!-- Background Music -->
     <audio id="background-music" autoplay loop>
-        <source src="https://c22w.site/Paris.mp3" type="audio/mp3">
+        <source src="https://c22w.site/parise.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
 
     <!-- ASCII Art -->
-    <div class="ascii-art">
+    <div class="ascii-art" id="asciiArt">
         __<br>
         ,::%%n<br>
         ,-::%%%%%%=. <br>
@@ -70,6 +73,19 @@
         `%%*%%%%%%%8888888%j    LS   H888%88&i<br>
         \%%%%%%%%%%888888%f         i8888%8&t<br>
     </div>
+
+    <script>
+        const asciiArt = document.getElementById("asciiArt");
+
+        // Event listener for mouse move to trigger the fade-out and fade-in effect
+        asciiArt.addEventListener('mouseenter', () => {
+            asciiArt.style.opacity = 0;  // Fade out
+        });
+
+        asciiArt.addEventListener('mouseleave', () => {
+            asciiArt.style.opacity = 1;  // Fade in
+        });
+    </script>
 
 </body>
 </html>
