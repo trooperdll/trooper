@@ -3,48 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>im a skid</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #000000;
-            font-family: monospace;
-            color: blue;
-            cursor: url('whitecircleglow.png'), auto; /* Replace with your custom cursor image */
-        }
-
-        .ascii-container {
-            display: inline-block;
-            font-size: 20px;
-            white-space: pre;
-            transition: transform 0.3s ease-out;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .ascii-art {
-            transition: transform 0.3s ease-out;
-        }
-
-        /* Background music settings */
-        #background-audio {
-            display: none; /* Hide the audio player */
-        }
-    </style>
+    <title>Interactive ASCII Art</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Background music -->
-    <audio id="background-audio" autoplay loop>
-        <source src="Prada.mp3" type="audio/mp3"> <!-- Replace with your music file -->
-        Your browser does not support the audio element.   
-    </audio>
+    <!-- Admin Tab (Hidden by default) -->
+    <div id="adminTab" class="admin-tab">
+        <h2>Admin Panel</h2>
+        <label for="backgroundUpload">Upload Background:</label>
+        <input type="file" id="backgroundUpload" accept="image/*">
+        <br>
+        <label for="musicUpload">Upload Music:</label>
+        <input type="file" id="musicUpload" accept="audio/*">
+        <br>
+        <button onclick="saveFiles()">Save Files</button>
+    </div>
 
-
-    <!-- ASCII Art Container -->
+    <!-- Main Content -->
     <div class="ascii-container" id="asciiContainer">
         <div class="ascii-art" id="asciiArt">
             ,n888888n,
@@ -65,7 +40,7 @@
      .-(  / / / |) )-----------(/ ~  / /  |---.
 ______ | (   '    /_/    Trooper   (__/     /   |_______
 \      |   (_(_ ( /~ For President  \___/_/'    |      / 
- \     | Let's put Trooper in the White House!  |     / 
+ \     | Let's put a Trooper in the White House!|     / 
  /     (________________________________________)     \
 /__________)     __--|~mb  ,g8888b.         (__________\
                _/    8888b(.8P"~'~---__  
@@ -79,20 +54,6 @@ ______ | (   '    /_/    Trooper   (__/     /   |_______
         </div>
     </div>
 
-    <script>
-        const asciiContainer = document.getElementById('asciiContainer');
-        const asciiArt = document.getElementById('asciiArt');
-
-        asciiContainer.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-
-            asciiArt.style.transform = `translate(${x * 60}px, ${y * 60}px) scale(1.2)`;
-        });
-
-        asciiContainer.addEventListener('mouseleave', () => {
-            asciiArt.style.transform = 'translate(0, 0) scale(1)';
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
