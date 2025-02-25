@@ -14,18 +14,21 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            cursor: default;
         }
         .ascii-art-container {
             display: inline-block;
             text-align: center;
+            transition: opacity 0.5s ease-in-out;
+            user-select: none; /* Prevent text selection */
+            cursor: default; /* Keep cursor consistent */
         }
         .ascii-line {
             color: red;
             font-size: 8px;
             white-space: pre;
             display: block;
-            opacity: 1;
-            transition: opacity 0.5s ease, transform 0.3s ease;
+            transition: transform 0.3s ease;
         }
         audio {
             position: absolute;
@@ -65,33 +68,14 @@
 
     <script>
         const asciiArtContainer = document.getElementById("asciiArtContainer");
-        const asciiLines = document.querySelectorAll(".ascii-line");
 
-        // Mousemove event to control the position of each line and fade effect
-        asciiArtContainer.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-
-            asciiLines.forEach((line, index) => {
-                const distance = Math.abs(x - (index / asciiLines.length)); // Calculate distance based on line index
-
-                // Fade out parts based on distance from the mouse
-                if (distance < 0.1) {
-                    line.style.opacity = 0; // Fade out
-                } else {
-                    line.style.opacity = 1; // Fade in
-                }
-
-                // Move lines based on mouse position
-                line.style.transform = `translate(${x * 200 - 100}px, ${y * 200 - 100}px)`; // Adjust to make them move more drastically
-            });
+        // Fade out when mouse is over, fade in when mouse leaves
+        asciiArtContainer.addEventListener('mouseenter', () => {
+            asciiArtContainer.style.opacity = 0;
         });
 
         asciiArtContainer.addEventListener('mouseleave', () => {
-            asciiLines.forEach(line => {
-                line.style.opacity = 1; // Reset opacity
-                line.style.transform = 'translate(0, 0)'; // Reset position
-            });
+            asciiArtContainer.style.opacity = 1;
         });
     </script>
 
