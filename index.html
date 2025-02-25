@@ -3,28 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Simple Page</title>
+    <title>ASCII Art Flowing</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1e1e1e;
+            font-family: monospace;
+            color: white;
+        }
+        .ascii-container {
+            display: inline-block;
+            font-size: 20px;
+            white-space: pre;
+            transition: transform 0.3s ease-out;
+            cursor: pointer;
+            user-select: none;
+        }
+        .ascii-art {
+            transition: transform 0.3s ease-out;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Simple Website!</h1>
-    </header>
+    <div class="ascii-container" id="asciiContainer">
+        <div class="ascii-art" id="asciiArt">
+            @@@@   @@@@    @@@@    @@@@  
+          @@@     @@@@   @@@@   @@@@   
+         @@@@     @@@@   @@@@    @@@  
+         @@@    @@@@  @@@    @@@  @@@  
+          @@@@   @@@@   @@@   @@@  
+        @@@   @@@    @@@     @@@   @@@  
+        @@@@    @@@  @@@    @@@    @@@
+        @@@   @@@@   @@@   @@@     @@@
+        @@@   @@@@   @@@@   @@@    @@@
+        @@@  @@@    @@@     @@@     @@@
+        @@@@     @@@  @@@  @@@  @@@   
+        @@@  @@@@   @@@@    @@@  @@@@ 
+        @@@@   @@@  @@@   @@@    @@@@ 
+        @@@    @@@@ @@@    @@@@   @@@@ 
+        @@@   @@@  @@@   @@@@    @@@@   
+        @@@    @@@@    @@@@       @@@ 
+        @@@   @@@@  @@@     @@@  
+    </div>
+    </div>
 
-    <nav>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </nav>
+    <script>
+        const asciiContainer = document.getElementById('asciiContainer');
+        const asciiArt = document.getElementById('asciiArt');
 
-    <section>
-        <h2>About This Page</h2>
-        <p>This is a basic HTML index page. Feel free to customize it!</p>
-    </section>
+        asciiContainer.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
 
-    <footer>
-        <p>&copy; 2025 My Simple Website</p>
-    </footer>
+            asciiArt.style.transform = `translate(${x * 100}px, ${y * 100}px) scale(1.2)`;
+        });
+
+        asciiContainer.addEventListener('mouseleave', () => {
+            asciiArt.style.transform = 'translate(0, 0) scale(1)';
+        });
+    </script>
 </body>
 </html>
