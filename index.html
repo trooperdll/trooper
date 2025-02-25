@@ -24,11 +24,11 @@
             cursor: default;
             position: relative;
         }
-        .ascii-line {
+        .ascii-char {
             color: red;
             font-size: 8px;
             white-space: pre;
-            display: block;
+            display: inline-block;
             position: relative;
             transition: opacity 0.3s ease-in-out;
         }
@@ -40,7 +40,7 @@
         }
         .particle {
             position: absolute;
-            color: red;
+            color: white; /* Changed to white */
             font-size: 8px;
             pointer-events: none;
             opacity: 1;
@@ -61,76 +61,77 @@
     </audio>
 
     <!-- ASCII Art Container -->
-    <div class="ascii-art-container" id="asciiArtContainer">
-        <span class="ascii-line">__</span>
-        <span class="ascii-line">,::%%n</span>
-        <span class="ascii-line">,-::%%%%%%=.</span>
-        <span class="ascii-line">/:::%%%(:  "-:.</span>
-        <span class="ascii-line">,:::%:%%%f:     :</span>
-        <span class="ascii-line">f:::%:%%%%,   ."`.</span>
-        <span class="ascii-line">i::::%%:%%%%, .',-t</span>
-        <span class="ascii-line">j::::::%:%%%%i 'i  `i</span>
-        <span class="ascii-line">::::::::%:%%%%%  :_-=".</span>
-        <span class="ascii-line">/:::::::%%%%%%%i      t</span>
-        <span class="ascii-line">,:::::::::%%%%%%; .    ]</span>
-        <span class="ascii-line">f:::::::::%%%%%;  ,.-= j,-""-.</span>
-        <span class="ascii-line">/::::::::::l%%%%f <--"/,'      `.</span>
-        <span class="ascii-line">/::::::::::l%%%%;:: "`","         \<br></span>
-        <span class="ascii-line">/:::::::::::l%%%;:-:__.,"           \<br></span>
-        <span class="ascii-line">;:::::::::::l%%%;::::: /              :<br></span>
-        <span class="ascii-line">j::::::::::::l%%; ' '        .      __,|</span>
-        <span class="ascii-line">:::::::::;:-''"                `.  ,%8888&n</span>
-    </div>
+    <div class="ascii-art-container" id="asciiArtContainer"></div>
 
     <!-- Discord Text -->
     <div class="discord-text">discord = c22ww</div>
 
     <script>
         const asciiArtContainer = document.getElementById("asciiArtContainer");
-        const asciiLines = document.querySelectorAll(".ascii-line");
 
-        // Mouse move event for effect
-        asciiArtContainer.addEventListener("mousemove", (event) => {
-            const { clientX, clientY } = event;
+        // ASCII Art as a string
+        const asciiArt = `
+__
+,::%%n
+,-::%%%%%%=.
+/:::%%%(:  "-:.
+,:::%:%%%f:     :
+f:::%:%%%%,   ."\`.
+i::::%%:%%%%, .',-t
+j::::::%:%%%%i 'i  \`i
+::::::::%:%%%%%  :_-=".
+::::::::::%%%%%%%i      t
+,:::::::::%%%%%%; .    ]
+f:::::::::%%%%%;  ,.-= j,-""-.
+:::::::::::l%%%%f <--"/,'      \`.
+:::::::::::l%%%%;:: "\`","         \\
+:::::::::::l%%%;:-:__,"           \\
+:::::::::::l%%%;::::: /              :
+j::::::::::::l%%; ' '        .      __,|
+:::::::::;:-''"                \`.  ,%8888&n`;
 
-            asciiLines.forEach(line => {
-                const rect = line.getBoundingClientRect();
-                if (clientX > rect.left && clientX < rect.right && clientY > rect.top && clientY < rect.bottom) {
-                    // Randomly decide if this part should fade
-                    if (Math.random() > 0.6) {
-                        line.style.opacity = 0.3;
-                        createParticles(line);
-                    }
-                }
+        // Convert ASCII text to individual span elements
+        asciiArt.split("\n").forEach(line => {
+            const lineContainer = document.createElement("div");
+            line.split("").forEach(char => {
+                const span = document.createElement("span");
+                span.classList.add("ascii-char");
+                span.textContent = char;
+                lineContainer.appendChild(span);
+
+                // Add hover effect to each character
+                span.addEventListener("mouseenter", () => {
+                    createParticles(span);
+                    span.style.opacity = 0; // Fade out character
+                });
+
+                span.addEventListener("mouseleave", () => {
+                    setTimeout(() => {
+                        span.style.opacity = 1; // Bring character back
+                    }, 300);
+                });
             });
-        });
-
-        // Reset opacity on mouse leave
-        asciiArtContainer.addEventListener("mouseleave", () => {
-            asciiLines.forEach(line => {
-                line.style.opacity = 1;
-            });
+            asciiArtContainer.appendChild(lineContainer);
         });
 
         function createParticles(element) {
-            const text = element.textContent.trim();
+            const char = element.textContent;
+            if (char.trim() === "") return; // Ignore spaces
+
             const rect = element.getBoundingClientRect();
-            
-            for (let char of text) {
-                if (char.trim() === "") continue; // Ignore spaces
-                
+            for (let i = 0; i < 3; i++) { // Only 3 particles per character for optimization
                 const particle = document.createElement("span");
                 particle.classList.add("particle");
                 particle.textContent = char;
                 document.body.appendChild(particle);
 
                 // Set initial position
-                particle.style.left = `${rect.left + Math.random() * rect.width}px`;
-                particle.style.top = `${rect.top + Math.random() * rect.height}px`;
+                particle.style.left = `${rect.left + Math.random() * 5}px`;
+                particle.style.top = `${rect.top + Math.random() * 5}px`;
 
                 // Random movement direction
-                const moveX = (Math.random() - 0.5) * 80;
-                const moveY = (Math.random() - 0.5) * 80;
+                const moveX = (Math.random() - 0.5) * 40;
+                const moveY = (Math.random() - 0.5) * 40;
 
                 setTimeout(() => {
                     particle.style.transform = `translate(${moveX}px, ${moveY}px)`;
