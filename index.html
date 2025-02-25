@@ -15,15 +15,29 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            cursor: default;
+            cursor: none; /* Hide default cursor */
             user-select: none;
         }
+        
+        /* Custom Cursor */
+        .custom-cursor {
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transition: transform 0.05s linear;
+            box-shadow: 0 0 5px white;
+        }
+
         .ascii-art-container {
             display: inline-block;
             text-align: center;
-            cursor: default;
+            cursor: none; /* Hide cursor inside ASCII */
             position: relative;
         }
+
         .ascii-char {
             color: red;
             font-size: 8px;
@@ -32,23 +46,52 @@
             position: relative;
             transition: opacity 0.3s ease-in-out;
         }
-        .discord-text {
+
+        .discord-text, .timestamp {
             color: white;
-            font-size: 10px;
-            margin-top: 20px;
+            font-size: 12px;
+            margin-top: 5px;
             opacity: 0.7;
+            position: relative;
+            transition: color 0.3s ease-in-out;
         }
+
+        /* Glitch Effect */
+        @keyframes glitch {
+            0% { color: white; }
+            20% { color: red; }
+            40% { color: orange; }
+            60% { color: yellow; }
+            80% { color: green; }
+            100% { color: blue; }
+        }
+
+        .glitch {
+            animation: glitch 0.5s infinite alternate;
+        }
+
         .particle {
             position: absolute;
-            color: white; /* Changed to white */
+            color: white;
             font-size: 8px;
             pointer-events: none;
             opacity: 1;
             transition: transform 0.5s ease-out, opacity 0.5s ease-in;
         }
+
         audio {
             position: absolute;
             visibility: hidden;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .ascii-char {
+                font-size: 10px;
+            }
+            .discord-text, .timestamp {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -60,16 +103,23 @@
         Your browser does not support the audio element.
     </audio>
 
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="cursor"></div>
+
     <!-- ASCII Art Container -->
     <div class="ascii-art-container" id="asciiArtContainer"></div>
 
     <!-- Discord Text -->
-    <div class="discord-text">discord = c22ww</div>
+    <div class="discord-text" id="discordText">discord = c22ww</div>
+    <div class="timestamp" id="timestamp"></div>
 
     <script>
         const asciiArtContainer = document.getElementById("asciiArtContainer");
+        const discordText = document.getElementById("discordText");
+        const timestampElement = document.getElementById("timestamp");
+        const cursor = document.getElementById("cursor");
 
-        // ASCII Art as a string
+        // ASCII Art
         const asciiArt = `
 __
 ,::%%n
@@ -90,7 +140,7 @@ f:::::::::%%%%%;  ,.-= j,-""-.
 j::::::::::::l%%; ' '        .      __,|
 :::::::::;:-''"                \`.  ,%8888&n`;
 
-        // Convert ASCII text to individual span elements
+        // Convert ASCII text to individual spans
         asciiArt.split("\n").forEach(line => {
             const lineContainer = document.createElement("div");
             line.split("").forEach(char => {
@@ -99,7 +149,7 @@ j::::::::::::l%%; ' '        .      __,|
                 span.textContent = char;
                 lineContainer.appendChild(span);
 
-                // Add hover effect to each character
+                // Add hover effect
                 span.addEventListener("mouseenter", () => {
                     createParticles(span);
                     span.style.opacity = 0; // Fade out character
@@ -119,17 +169,17 @@ j::::::::::::l%%; ' '        .      __,|
             if (char.trim() === "") return; // Ignore spaces
 
             const rect = element.getBoundingClientRect();
-            for (let i = 0; i < 3; i++) { // Only 3 particles per character for optimization
+            for (let i = 0; i < 3; i++) { // Limit particles for performance
                 const particle = document.createElement("span");
                 particle.classList.add("particle");
                 particle.textContent = char;
                 document.body.appendChild(particle);
 
-                // Set initial position
+                // Set position
                 particle.style.left = `${rect.left + Math.random() * 5}px`;
                 particle.style.top = `${rect.top + Math.random() * 5}px`;
 
-                // Random movement direction
+                // Random movement
                 const moveX = (Math.random() - 0.5) * 40;
                 const moveY = (Math.random() - 0.5) * 40;
 
@@ -144,6 +194,38 @@ j::::::::::::l%%; ' '        .      __,|
                 }, 500);
             }
         }
+
+        // Glitch Effect on Discord Text
+        function applyGlitchEffect() {
+            discordText.classList.add("glitch");
+            setTimeout(() => {
+                discordText.classList.remove("glitch");
+            }, 500);
+        }
+        setInterval(applyGlitchEffect, 2000); // Glitch every 2 seconds
+
+        // Timestamp with Local Time
+        function updateTime() {
+            const now = new Date();
+            timestampElement.textContent = now.toLocaleTimeString();
+            timestampElement.classList.add("glitch");
+            setTimeout(() => {
+                timestampElement.classList.remove("glitch");
+            }, 500);
+        }
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call
+
+        // Custom Cursor Movement
+        document.addEventListener("mousemove", (e) => {
+            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        });
+
+        // Mobile Touch Support
+        document.addEventListener("touchmove", (e) => {
+            let touch = e.touches[0];
+            cursor.style.transform = `translate(${touch.clientX}px, ${touch.clientY}px)`;
+        });
     </script>
 
 </body>
