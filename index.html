@@ -18,7 +18,7 @@
             cursor: none; /* Hide default cursor */
             user-select: none;
         }
-        
+
         /* Custom Cursor */
         .custom-cursor {
             width: 8px;
@@ -29,6 +29,7 @@
             pointer-events: none;
             transition: transform 0.05s linear;
             box-shadow: 0 0 5px white;
+            transform: translate(-50%, -50%); /* Center on cursor */
         }
 
         .ascii-art-container {
@@ -216,15 +217,17 @@ j::::::::::::l%%; ' '        .      __,|
         setInterval(updateTime, 1000);
         updateTime(); // Initial call
 
-        // Custom Cursor Movement
+        // Custom Cursor Movement (Aligned Properly)
         document.addEventListener("mousemove", (e) => {
-            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
         });
 
-        // Mobile Touch Support
+        // Mobile Touch Support (For Mobile Users)
         document.addEventListener("touchmove", (e) => {
             let touch = e.touches[0];
-            cursor.style.transform = `translate(${touch.clientX}px, ${touch.clientY}px)`;
+            cursor.style.left = `${touch.clientX}px`;
+            cursor.style.top = `${touch.clientY}px`;
         });
     </script>
 
