@@ -15,6 +15,7 @@
             background-color: black;
             color: white;
             font-family: monospace;
+            cursor: none;
         }
         #enter-overlay {
             position: absolute;
@@ -39,11 +40,20 @@
         #logo {
             display: none;
         }
+        .custom-cursor {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
     </style>
 </head>
 <body>
     <div id="enter-overlay">
-        <button onclick="enterSite()">Enter Site</button>
+        <button onclick="enterSite()">/\</button>
     </div>
     <audio id="music-player" controls>
         <source src="track.mp3" type="audio/mp3">
@@ -51,6 +61,7 @@
         Your browser does not support the audio element.
     </audio>
     <img id="logo" src="logo.png" alt="Logo">
+    <div class="custom-cursor" id="custom-cursor"></div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const AudioPlayer = document.getElementById('music-player');
@@ -112,6 +123,13 @@
 
             window.onresize = resizeParticle;
             resizeParticle();
+
+            // Custom Cursor
+            const customCursor = document.getElementById('custom-cursor');
+            document.addEventListener('mousemove', (e) => {
+                customCursor.style.left = `${e.clientX}px`;
+                customCursor.style.top = `${e.clientY}px`;
+            });
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/next-particle@1.0.0/dist/next-particle.min.js"></script>
