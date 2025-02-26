@@ -49,30 +49,12 @@
             transform: translate(-50%, -50%);
         }
 
-        /* ASCII Art */
-        .ascii-art-container {
-            display: inline-block;
-            text-align: center;
-            cursor: none;
-            position: relative;
-        }
-
-        .ascii-char {
-            color: red;
-            font-size: 8px;
-            white-space: pre;
-            display: inline-block;
-            position: relative;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        /* Discord Text (Matrix Effect & Typewriter) */
+        /* Discord Text */
         .discord-text {
             font-size: 16px;
             font-weight: bold;
             white-space: nowrap;
             overflow: hidden;
-            border-right: 2px solid transparent;
             position: relative;
             display: inline-block;
         }
@@ -107,9 +89,6 @@
 
         /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .ascii-char {
-                font-size: 10px;
-            }
             .discord-text {
                 font-size: 14px;
             }
@@ -127,9 +106,6 @@
     <!-- Custom Cursor -->
     <div class="custom-cursor" id="cursor"></div>
 
-    <!-- ASCII Art -->
-    <div class="ascii-art-container" id="asciiArtContainer"></div>
-
     <!-- Discord Text (Typewriter + Matrix Effect) -->
     <div class="discord-text" id="discordText"></div>
 
@@ -143,43 +119,10 @@
         const cursor = document.getElementById("cursor");
 
         // Hide content until clicked
-        document.body.style.display = "none";
+        document.body.style.visibility = "hidden"; // Hide but still allows JS to run
         loadingScreen.addEventListener("click", () => {
             loadingScreen.style.display = "none";
-            document.body.style.display = "flex";
-        });
-
-        // ASCII Art
-        const asciiArtContainer = document.getElementById("asciiArtContainer");
-        const asciiArt = `
-__
-,::%%n
-,-::%%%%%%=.
-/:::%%%(:  "-:.
-,:::%:%%%f:     :
-f:::%:%%%%,   ."\`.
-i::::%%:%%%%, .',-t
-j::::::%:%%%%i 'i  \`i
-::::::::%:%%%%%  :_-=".
-::::::::::%%%%%%%i      t
-,:::::::::%%%%%%; .    ]
-f:::::::::%%%%%;  ,.-= j,-""-.
-:::::::::::l%%%%f <--"/,'      \`.
-:::::::::::l%%%%;:: "\`","         \\
-:::::::::::l%%%;:-:__,"           \\
-:::::::::::l%%%;::::: /              :
-j::::::::::::l%%; ' '        .      __,|
-:::::::::;:-''"                \`.  ,%8888&n`;
-
-        asciiArt.split("\n").forEach(line => {
-            const lineContainer = document.createElement("div");
-            line.split("").forEach(char => {
-                const span = document.createElement("span");
-                span.classList.add("ascii-char");
-                span.textContent = char;
-                lineContainer.appendChild(span);
-            });
-            asciiArtContainer.appendChild(lineContainer);
+            document.body.style.visibility = "visible";
         });
 
         // Matrix Effect on Discord Text
@@ -195,13 +138,13 @@ j::::::::::::l%%; ' '        .      __,|
                 setTimeout(() => {
                     span.textContent = finalText[index] || "";
                     span.classList.add("flashing");
-                }, index * 100); // Reveal one by one
+                }, index * 100);
             });
         }
 
         setTimeout(revealMatrixEffect, 1000);
 
-        // Typewriter Effect (after Matrix)
+        // Typewriter Effect
         function typewriterEffect() {
             discordText.innerHTML = "";
             let i = 0;
@@ -211,13 +154,13 @@ j::::::::::::l%%; ' '        .      __,|
                     i++;
                     setTimeout(type, 100);
                 } else {
-                    discordText.classList.add("flashing"); // Flashing effect after typing
+                    discordText.classList.add("flashing");
                 }
             }
             setTimeout(type, 1500);
         }
 
-        setTimeout(typewriterEffect, 2500); // Start after matrix effect
+        setTimeout(typewriterEffect, 2500);
 
         // Flashing Timestamp
         function updateTime() {
@@ -233,7 +176,6 @@ j::::::::::::l%%; ' '        .      __,|
             cursor.style.top = `${e.clientY}px`;
         });
 
-        // Mobile Touch Support
         document.addEventListener("touchmove", (e) => {
             let touch = e.touches[0];
             cursor.style.left = `${touch.clientX}px`;
