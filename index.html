@@ -64,14 +64,44 @@
             }
         }
 
-        /* Discord Text */
-        .discord-text {
-            font-size: 16px;
-            font-weight: bold;
-            white-space: nowrap;
-            overflow: hidden;
-            position: relative;
+        /* ASCII Art */
+        .ascii-art-container {
             display: inline-block;
+            text-align: center;
+            position: relative;
+        }
+
+        .ascii-line {
+            color: red;
+            font-size: 8px;
+            white-space: pre;
+            display: inline-block;
+            opacity: 1;
+            transition: opacity 0.5s ease, transform 0.3s ease;
+            position: relative;
+        }
+
+        /* Particles */
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background-color: white;
+            opacity: 0.8;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: fade-out 0.5s ease-out forwards;
+        }
+
+        @keyframes fade-out {
+            from {
+                transform: scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: scale(2);
+                opacity: 0;
+            }
         }
 
         /* Flashing Effect */
@@ -121,8 +151,21 @@
     <!-- Custom Cursor -->
     <div class="custom-cursor" id="cursor"></div>
 
+    <!-- ASCII Art Container -->
+    <div class="ascii-art-container" id="asciiArtContainer">
+        <span class="ascii-line">__</span>
+        <span class="ascii-line">,::%%n</span>
+        <span class="ascii-line">,-::%%%%%%=.</span>
+        <span class="ascii-line">/:::%%%(:  "-:.</span>
+        <span class="ascii-line">,:::%:%%%f:     :</span>
+        <span class="ascii-line">f:::%:%%%%,   ."`.</span>
+        <span class="ascii-line">i::::%%:%%%%, .',-t</span>
+        <span class="ascii-line">j::::::%:%%%%i 'i  `i</span>
+        <span class="ascii-line">::::::::%:%%%%%  :_-=".</span>
+    </div>
+
     <!-- Discord Text (Typewriter + Matrix Effect) -->
-    <div class="discord-text" id="discordText"></div>
+    <div class="discord-text flashing" id="discordText"></div>
 
     <!-- Timestamp -->
     <div class="timestamp flashing-timestamp" id="timestamp"></div>
@@ -132,6 +175,8 @@
         const timestampElement = document.getElementById("timestamp");
         const cursor = document.getElementById("cursor");
         const rainContainer = document.getElementById("rainContainer");
+        const asciiArtContainer = document.getElementById("asciiArtContainer");
+        const asciiLines = document.querySelectorAll(".ascii-line");
 
         // Matrix Effect on Discord Text
         const finalText = "discord = c22ww";
@@ -152,24 +197,6 @@
 
         setTimeout(revealMatrixEffect, 1000);
 
-        // Typewriter Effect
-        function typewriterEffect() {
-            discordText.innerHTML = "";
-            let i = 0;
-            function type() {
-                if (i < finalText.length) {
-                    discordText.innerHTML += finalText[i];
-                    i++;
-                    setTimeout(type, 100);
-                } else {
-                    discordText.classList.add("flashing");
-                }
-            }
-            setTimeout(type, 1500);
-        }
-
-        setTimeout(typewriterEffect, 2500);
-
         // Flashing Timestamp
         function updateTime() {
             const now = new Date();
@@ -188,6 +215,32 @@
             let touch = e.touches[0];
             cursor.style.left = `${touch.clientX}px`;
             cursor.style.top = `${touch.clientY}px`;
+        });
+
+        // ASCII Art Particle Effect
+        asciiLines.forEach((line) => {
+            line.addEventListener("mouseenter", (e) => {
+                line.style.opacity = 0;
+                for (let i = 0; i < 5; i++) {
+                    let particle = document.createElement("div");
+                    particle.classList.add("particle");
+                    let xOffset = (Math.random() - 0.5) * 20;
+                    let yOffset = (Math.random() - 0.5) * 20;
+                    particle.style.left = `${e.clientX + xOffset}px`;
+                    particle.style.top = `${e.clientY + yOffset}px`;
+                    document.body.appendChild(particle);
+
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 500);
+                }
+            });
+
+            line.addEventListener("mouseleave", () => {
+                setTimeout(() => {
+                    line.style.opacity = 1;
+                }, 500);
+            });
         });
 
         // Create Optimized Red Rain Effect
