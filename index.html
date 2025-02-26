@@ -33,34 +33,35 @@
             transform: translate(-50%, -50%);
         }
 
-        /* Rain Particle Effect */
+        /* Rain Effect */
         .rain-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
             pointer-events: none;
+            perspective: 800px;
         }
 
         .rain-drop {
             position: absolute;
             width: 2px;
-            height: 15px;
+            height: 20px;
             background-color: rgba(255, 0, 0, 0.6);
             opacity: 0.7;
             animation: fall linear infinite;
+            transform-origin: center;
         }
 
         @keyframes fall {
             from {
-                transform: translateY(-10px);
-                opacity: 0;
+                transform: translate3d(0, -100vh, 0) scale(1);
+                opacity: 0.8;
             }
             to {
-                transform: translateY(100vh);
-                opacity: 1;
+                transform: translate3d(0, 100vh, -200px) scale(0.7);
+                opacity: 0;
             }
         }
 
@@ -69,19 +70,20 @@
             display: inline-block;
             text-align: center;
             position: relative;
+            line-height: 1.1;
         }
 
         .ascii-line {
             color: red;
-            font-size: 8px;
+            font-size: 10px;
             white-space: pre;
-            display: inline-block;
+            display: block;
             opacity: 1;
             transition: opacity 0.5s ease, transform 0.3s ease;
             position: relative;
         }
 
-        /* Particles */
+        /* Particle Effect */
         .particle {
             position: absolute;
             width: 3px;
@@ -102,6 +104,20 @@
                 transform: scale(2);
                 opacity: 0;
             }
+        }
+
+        /* Glitch Effect */
+        @keyframes glitch {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-3px); }
+            40% { transform: translateX(3px); }
+            60% { transform: translateX(-1px); }
+            80% { transform: translateX(1px); }
+            100% { transform: translateX(0); }
+        }
+
+        .glitch {
+            animation: glitch 0.1s infinite alternate;
         }
 
         /* Flashing Effect */
@@ -153,19 +169,21 @@
 
     <!-- ASCII Art Container -->
     <div class="ascii-art-container" id="asciiArtContainer">
-        <span class="ascii-line">__</span>
-        <span class="ascii-line">,::%%n</span>
-        <span class="ascii-line">,-::%%%%%%=.</span>
-        <span class="ascii-line">/:::%%%(:  "-:.</span>
-        <span class="ascii-line">,:::%:%%%f:     :</span>
-        <span class="ascii-line">f:::%:%%%%,   ."`.</span>
-        <span class="ascii-line">i::::%%:%%%%, .',-t</span>
-        <span class="ascii-line">j::::::%:%%%%i 'i  `i</span>
-        <span class="ascii-line">::::::::%:%%%%%  :_-=".</span>
+        <pre class="ascii-line">
+        __
+    ,::%%n
+ ,-::%%%%%%=.
+ /:::%%%(:  "-:.
+ ,:::%:%%%f:     :
+ f:::%:%%%%,   ."`.
+ i::::%%:%%%%, .',-t
+ j::::::%:%%%%i 'i  `i
+ ::::::::%:%%%%%  :_-=".
+        </pre>
     </div>
 
-    <!-- Discord Text (Typewriter + Matrix Effect) -->
-    <div class="discord-text flashing" id="discordText"></div>
+    <!-- Discord Text (Typewriter + Glitch Effect) -->
+    <div class="discord-text flashing glitch" id="discordText"></div>
 
     <!-- Timestamp -->
     <div class="timestamp flashing-timestamp" id="timestamp"></div>
@@ -176,27 +194,29 @@
             const timestampElement = document.getElementById("timestamp");
             const cursor = document.getElementById("cursor");
             const rainContainer = document.getElementById("rainContainer");
-            const asciiArtContainer = document.getElementById("asciiArtContainer");
             const asciiLines = document.querySelectorAll(".ascii-line");
 
             // Matrix Effect on Discord Text
             const finalText = "discord = c22ww";
-            let matrixText = "0101010101010".split("");
+            let matrixText = Array(finalText.length).fill("0");
 
             function revealMatrixEffect() {
                 discordText.innerHTML = "";
-                matrixText.forEach((char, index) => {
+                matrixText.forEach((_, index) => {
                     let span = document.createElement("span");
-                    span.textContent = char;
+                    span.textContent = Math.random() > 0.5 ? "0" : "1";
                     discordText.appendChild(span);
+
+                    let delay = index * (Math.random() * 250 + 200); // More randomness
+
                     setTimeout(() => {
                         span.textContent = finalText[index] || "";
-                        span.classList.add("flashing");
-                    }, index * 100);
+                        span.classList.add("flashing", "glitch");
+                    }, delay);
                 });
             }
 
-            setTimeout(revealMatrixEffect, 1000);
+            setTimeout(revealMatrixEffect, 2000);
 
             // Flashing Timestamp
             function updateTime() {
@@ -221,12 +241,11 @@
             // ASCII Art Particle Effect
             asciiLines.forEach((line) => {
                 line.addEventListener("mouseenter", (e) => {
-                    line.style.opacity = 0;
-                    for (let i = 0; i < 5; i++) {
+                    for (let i = 0; i < 8; i++) { // More particles for a better effect
                         let particle = document.createElement("div");
                         particle.classList.add("particle");
-                        let xOffset = (Math.random() - 0.5) * 20;
-                        let yOffset = (Math.random() - 0.5) * 20;
+                        let xOffset = (Math.random() - 0.5) * 30;
+                        let yOffset = (Math.random() - 0.5) * 30;
                         particle.style.left = `${e.clientX + xOffset}px`;
                         particle.style.top = `${e.clientY + yOffset}px`;
                         document.body.appendChild(particle);
@@ -236,15 +255,9 @@
                         }, 500);
                     }
                 });
-
-                line.addEventListener("mouseleave", () => {
-                    setTimeout(() => {
-                        line.style.opacity = 1;
-                    }, 500);
-                });
             });
 
-            // Create Optimized Red Rain Effect
+            // Create Rain Effect
             function createRain() {
                 for (let i = 0; i < 80; i++) {
                     let drop = document.createElement("div");
@@ -257,17 +270,6 @@
             }
 
             createRain();
-
-            // Title Animation
-            const titles = ['#', '#d', '#de', '#dea', '#dead', '#deads', '#deadsh', '#deadsho', '#deadshot', '#deadshot', '#deadsho', '#deadsh', '#deads', '#dead', '#dea', '#de', '#d', '#'];
-            let index = 0;
-
-            function changeTitle() {
-                document.title = titles[index];
-                index = (index + 1) % titles.length;
-                setTimeout(changeTitle, 200);
-            }
-            changeTitle();
         });
     </script>
 </body>
