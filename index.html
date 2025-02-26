@@ -4,134 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>#</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: black;
-            color: white;
-            font-family: monospace;
-            cursor: none;
-        }
-        #enter-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-        }
-        #enter-overlay button {
-            padding: 15px 30px;
-            font-size: 20px;
-            background-color: white;
-            color: black;
-            border: none;
-            cursor: pointer;
-        }
-        #logo {
-            display: none;
-        }
-        .custom-cursor {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: red;
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="enter-overlay">
         <button onclick="enterSite()">/\</button>
     </div>
-    <audio id="music-player" controls>
+    <audio id="music-player">
         <source src="track.mp3" type="audio/mp3">
         <source src="track1.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    <img id="logo" src="logo.png" alt="Logo">
     <div class="custom-cursor" id="custom-cursor"></div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const AudioPlayer = document.getElementById('music-player');
-            const Volume = 0.25;
-            const tracks = ['track.mp3', 'track1.mp3']; // Array of track options
-
-            if (AudioPlayer) {
-                AudioPlayer.volume = Volume;
-                // Choose a random track from the array
-                const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
-                AudioPlayer.src = randomTrack;
-            }
-
-            // Entry overlay function
-            window.enterSite = function() {
-                const overlay = document.getElementById('enter-overlay');
-                if (overlay) {
-                    overlay.style.display = 'none';
-                    if (AudioPlayer) {
-                        AudioPlayer.play()
-                            .then(() => console.log('Playing track:', AudioPlayer.src))
-                            .catch(err => {
-                                console.warn('Audio playback issue:', err);
-                            });
-                    }
-                }
-            };
-
-            // Title Animation
-            const titles = ['#', '#d', '#de', '#dea', '#dead', '#deads', '#deadsh', '#deadsho', '#deadshot', '#deadshot', '#deadsho', '#deadsh', '#deads', '#dead', '#dea', '#de', '#d', '#'];
-            let index = 0;
-
-            function changeTitle() {
-                document.title = titles[index];
-                index = (index + 1) % titles.length;
-                setTimeout(changeTitle, 200);
-            }
-            changeTitle();
-
-            // NextParticle Initialization
-            const nextParticle = new NextParticle({
-                image: document.getElementById("logo"),
-                width: window.innerWidth,
-                height: window.innerHeight * 0.8,
-                maxWidth: Math.min(window.innerWidth * 0.8, 400),
-                particleGap: 4,
-                velocity: 0.5,
-                proximity: 100,
-                mouseForce: 300,
-                color: "#c0c0c0",
-            });
-
-            function resizeParticle() {
-                nextParticle.width = window.innerWidth;
-                nextParticle.height = window.innerHeight * 0.8;
-                nextParticle.maxWidth = Math.min(window.innerWidth * 0.8, 400);
-                nextParticle.start();
-            }
-
-            window.onresize = resizeParticle;
-            resizeParticle();
-
-            // Custom Cursor
-            const customCursor = document.getElementById('custom-cursor');
-            document.addEventListener('mousemove', (e) => {
-                customCursor.style.left = `${e.clientX}px`;
-                customCursor.style.top = `${e.clientY}px`;
-            });
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/next-particle@1.0.0/dist/next-particle.min.js"></script>
+    <canvas id="particle-canvas"></canvas>
+    <script src="script.js"></script>
 </body>
 </html>
