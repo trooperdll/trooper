@@ -15,8 +15,25 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            cursor: none; /* Hide default cursor */
+            cursor: none;
             user-select: none;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 50px;
+            z-index: 1000;
+            cursor: pointer;
         }
 
         /* Custom Cursor */
@@ -29,13 +46,14 @@
             pointer-events: none;
             transition: transform 0.05s linear;
             box-shadow: 0 0 5px white;
-            transform: translate(-50%, -50%); /* Center on cursor */
+            transform: translate(-50%, -50%);
         }
 
+        /* ASCII Art */
         .ascii-art-container {
             display: inline-block;
             text-align: center;
-            cursor: none; /* Hide cursor inside ASCII */
+            cursor: none;
             position: relative;
         }
 
@@ -48,41 +66,43 @@
             transition: opacity 0.3s ease-in-out;
         }
 
-        .discord-text, .timestamp {
-            color: white;
-            font-size: 12px;
-            margin-top: 5px;
-            opacity: 0.7;
+        /* Discord Text (Matrix Effect & Typewriter) */
+        .discord-text {
+            font-size: 16px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid transparent;
             position: relative;
-            transition: color 0.3s ease-in-out;
+            display: inline-block;
         }
 
-        /* Glitch Effect */
-        @keyframes glitch {
-            0% { color: white; }
-            20% { color: red; }
-            40% { color: orange; }
-            60% { color: yellow; }
-            80% { color: green; }
-            100% { color: blue; }
+        /* Flashing Effect */
+        @keyframes flash-red-white {
+            0% { color: red; }
+            50% { color: white; }
+            100% { color: red; }
         }
 
-        .glitch {
-            animation: glitch 0.5s infinite alternate;
+        @keyframes flash-red-white-black {
+            0% { color: red; }
+            33% { color: white; }
+            66% { color: black; }
+            100% { color: red; }
         }
 
-        .particle {
-            position: absolute;
-            color: white;
-            font-size: 8px;
-            pointer-events: none;
-            opacity: 1;
-            transition: transform 0.5s ease-out, opacity 0.5s ease-in;
+        .flashing {
+            animation: flash-red-white 1s infinite alternate;
         }
 
-        audio {
-            position: absolute;
-            visibility: hidden;
+        .flashing-timestamp {
+            animation: flash-red-white-black 1.5s infinite alternate;
+        }
+
+        .timestamp {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 5px;
         }
 
         /* Mobile Adjustments */
@@ -90,37 +110,47 @@
             .ascii-char {
                 font-size: 10px;
             }
-            .discord-text, .timestamp {
+            .discord-text {
                 font-size: 14px;
+            }
+            .timestamp {
+                font-size: 12px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Background Music -->
-    <audio id="background-music" autoplay loop>
-        <source src="https://c22w.site/parise.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">/\</div>
 
     <!-- Custom Cursor -->
     <div class="custom-cursor" id="cursor"></div>
 
-    <!-- ASCII Art Container -->
+    <!-- ASCII Art -->
     <div class="ascii-art-container" id="asciiArtContainer"></div>
 
-    <!-- Discord Text -->
-    <div class="discord-text" id="discordText">discord = c22ww</div>
-    <div class="timestamp" id="timestamp"></div>
+    <!-- Discord Text (Typewriter + Matrix Effect) -->
+    <div class="discord-text" id="discordText"></div>
+
+    <!-- Timestamp -->
+    <div class="timestamp flashing-timestamp" id="timestamp"></div>
 
     <script>
-        const asciiArtContainer = document.getElementById("asciiArtContainer");
+        const loadingScreen = document.getElementById("loadingScreen");
         const discordText = document.getElementById("discordText");
         const timestampElement = document.getElementById("timestamp");
         const cursor = document.getElementById("cursor");
 
+        // Hide content until clicked
+        document.body.style.display = "none";
+        loadingScreen.addEventListener("click", () => {
+            loadingScreen.style.display = "none";
+            document.body.style.display = "flex";
+        });
+
         // ASCII Art
+        const asciiArtContainer = document.getElementById("asciiArtContainer");
         const asciiArt = `
 __
 ,::%%n
@@ -141,7 +171,6 @@ f:::::::::%%%%%;  ,.-= j,-""-.
 j::::::::::::l%%; ' '        .      __,|
 :::::::::;:-''"                \`.  ,%8888&n`;
 
-        // Convert ASCII text to individual spans
         asciiArt.split("\n").forEach(line => {
             const lineContainer = document.createElement("div");
             line.split("").forEach(char => {
@@ -149,81 +178,62 @@ j::::::::::::l%%; ' '        .      __,|
                 span.classList.add("ascii-char");
                 span.textContent = char;
                 lineContainer.appendChild(span);
-
-                // Add hover effect
-                span.addEventListener("mouseenter", () => {
-                    createParticles(span);
-                    span.style.opacity = 0; // Fade out character
-                });
-
-                span.addEventListener("mouseleave", () => {
-                    setTimeout(() => {
-                        span.style.opacity = 1; // Bring character back
-                    }, 300);
-                });
             });
             asciiArtContainer.appendChild(lineContainer);
         });
 
-        function createParticles(element) {
-            const char = element.textContent;
-            if (char.trim() === "") return; // Ignore spaces
+        // Matrix Effect on Discord Text
+        const finalText = "discord = c22ww";
+        let matrixText = "0101010101010".split("");
 
-            const rect = element.getBoundingClientRect();
-            for (let i = 0; i < 3; i++) { // Limit particles for performance
-                const particle = document.createElement("span");
-                particle.classList.add("particle");
-                particle.textContent = char;
-                document.body.appendChild(particle);
-
-                // Set position
-                particle.style.left = `${rect.left + Math.random() * 5}px`;
-                particle.style.top = `${rect.top + Math.random() * 5}px`;
-
-                // Random movement
-                const moveX = (Math.random() - 0.5) * 40;
-                const moveY = (Math.random() - 0.5) * 40;
-
+        function revealMatrixEffect() {
+            discordText.innerHTML = "";
+            matrixText.forEach((char, index) => {
+                let span = document.createElement("span");
+                span.textContent = char;
+                discordText.appendChild(span);
                 setTimeout(() => {
-                    particle.style.transform = `translate(${moveX}px, ${moveY}px)`;
-                    particle.style.opacity = 0;
-                }, 10);
+                    span.textContent = finalText[index] || "";
+                    span.classList.add("flashing");
+                }, index * 100); // Reveal one by one
+            });
+        }
 
-                // Remove after animation
-                setTimeout(() => {
-                    particle.remove();
-                }, 500);
+        setTimeout(revealMatrixEffect, 1000);
+
+        // Typewriter Effect (after Matrix)
+        function typewriterEffect() {
+            discordText.innerHTML = "";
+            let i = 0;
+            function type() {
+                if (i < finalText.length) {
+                    discordText.innerHTML += finalText[i];
+                    i++;
+                    setTimeout(type, 100);
+                } else {
+                    discordText.classList.add("flashing"); // Flashing effect after typing
+                }
             }
+            setTimeout(type, 1500);
         }
 
-        // Glitch Effect on Discord Text
-        function applyGlitchEffect() {
-            discordText.classList.add("glitch");
-            setTimeout(() => {
-                discordText.classList.remove("glitch");
-            }, 500);
-        }
-        setInterval(applyGlitchEffect, 2000); // Glitch every 2 seconds
+        setTimeout(typewriterEffect, 2500); // Start after matrix effect
 
-        // Timestamp with Local Time
+        // Flashing Timestamp
         function updateTime() {
             const now = new Date();
             timestampElement.textContent = now.toLocaleTimeString();
-            timestampElement.classList.add("glitch");
-            setTimeout(() => {
-                timestampElement.classList.remove("glitch");
-            }, 500);
         }
         setInterval(updateTime, 1000);
-        updateTime(); // Initial call
+        updateTime();
 
-        // Custom Cursor Movement (Aligned Properly)
+        // Custom Cursor Movement
         document.addEventListener("mousemove", (e) => {
             cursor.style.left = `${e.clientX}px`;
             cursor.style.top = `${e.clientY}px`;
         });
 
-        // Mobile Touch Support (For Mobile Users)
+        // Mobile Touch Support
         document.addEventListener("touchmove", (e) => {
             let touch = e.touches[0];
             cursor.style.left = `${touch.clientX}px`;
