@@ -69,14 +69,14 @@
             display: inline-block;
             text-align: center;
             position: relative;
+            font-size: 12px;
+            line-height: 1.2;
+            color: red;
         }
 
         .ascii-line {
-            color: red;
-            font-size: 8px;
             white-space: pre;
-            display: inline-block;
-            opacity: 1;
+            display: block;
             transition: opacity 0.5s ease, transform 0.3s ease;
             position: relative;
         }
@@ -134,6 +134,9 @@
 
         /* Mobile Adjustments */
         @media (max-width: 768px) {
+            .ascii-art-container {
+                font-size: 8px;
+            }
             .discord-text {
                 font-size: 14px;
             }
@@ -153,15 +156,13 @@
 
     <!-- ASCII Art Container -->
     <div class="ascii-art-container" id="asciiArtContainer">
-        <span class="ascii-line">__</span>
-        <span class="ascii-line">,::%%n</span>
-        <span class="ascii-line">,-::%%%%%%=.</span>
-        <span class="ascii-line">/:::%%%(:  "-:.</span>
-        <span class="ascii-line">,:::%:%%%f:     :</span>
-        <span class="ascii-line">f:::%:%%%%,   ."`.</span>
-        <span class="ascii-line">i::::%%:%%%%, .',-t</span>
-        <span class="ascii-line">j::::::%:%%%%i 'i  `i</span>
-        <span class="ascii-line">::::::::%:%%%%%  :_-=".</span>
+        <div class="ascii-line">     .-""""-.</div>
+        <div class="ascii-line">    / -   -  \</div>
+        <div class="ascii-line">   |  .-. .- |</div>
+        <div class="ascii-line">   |  \o| |o (</div>
+        <div class="ascii-line">   \     ^    \</div>
+        <div class="ascii-line">    '.  )--'  /</div>
+        <div class="ascii-line">      '-...-'</div>
     </div>
 
     <!-- Discord Text (Typewriter + Matrix Effect) -->
@@ -180,7 +181,7 @@
 
         // Matrix Effect on Discord Text
         const finalText = "discord = c22ww";
-        let matrixText = "0101010101010".split("");
+        let matrixText = "01010101010101010101".split("");
 
         function revealMatrixEffect() {
             discordText.innerHTML = "";
@@ -191,7 +192,7 @@
                 setTimeout(() => {
                     span.textContent = finalText[index] || "";
                     span.classList.add("flashing");
-                }, index * 100);
+                }, index * 1200);
             });
         }
 
