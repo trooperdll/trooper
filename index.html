@@ -156,8 +156,8 @@
     <!-- Custom Cursor -->
     <div class="custom-cursor" id="cursor"></div>
 
-    <!-- Discord Text (Glitch + Matrix Effect) -->
-    <div class="discord-text glitch" id="discordText"></div>
+    <!-- Discord Text (Glitch + Matrix Effect at Start) -->
+    <div class="discord-text glitch" id="discordText">c22ww</div>
 
     <!-- Timestamp -->
     <div class="timestamp flashing-timestamp" id="timestamp"></div>
@@ -170,9 +170,7 @@
             const cloudContainer = document.getElementById("cloudContainer");
             const rainContainer = document.getElementById("rainContainer");
 
-            // Matrix Effect on Discord Text
-            const finalText = "c22ww";
-
+            // Matrix Effect on Discord Text (Only at Start)
             function revealMatrixEffect(element, text, delay) {
                 let binaryText = text.split("").map(() => "010101");
 
@@ -187,13 +185,12 @@
                 });
             }
 
-            setTimeout(() => revealMatrixEffect(discordText, finalText, 400), 1000);
+            setTimeout(() => revealMatrixEffect(discordText, "c22ww", 400), 1000);
 
-            // Flashing Timestamp with Matrix Effect
+            // Flashing Timestamp (Normal)
             function updateTime() {
                 const now = new Date();
-                const formattedTime = now.toLocaleTimeString();
-                revealMatrixEffect(timestampElement, formattedTime, 200);
+                timestampElement.textContent = now.toLocaleTimeString();
             }
 
             setInterval(updateTime, 1000);
