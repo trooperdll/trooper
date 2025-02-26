@@ -33,7 +33,7 @@
             transform: translate(-50%, -50%);
         }
 
-        /* Cloud Effect */
+        /* Cloud Effect (Only at Top) */
         .cloud-container {
             position: fixed;
             top: 0;
@@ -46,8 +46,8 @@
 
         .cloud {
             position: absolute;
-            width: 200px;
-            height: 100px;
+            width: 150px;
+            height: 70px;
             background: white;
             opacity: 0.1;
             border-radius: 50%;
@@ -64,7 +64,7 @@
             }
         }
 
-        /* Rain Particle Effect (3D) */
+        /* Rain Particle Effect (3D Look) */
         .rain-container {
             position: fixed;
             top: 0;
@@ -124,12 +124,12 @@
 
         /* Enlarged c22ww */
         .discord-text {
-            font-size: 36px;
+            font-size: 42px;
             font-weight: bold;
         }
 
         .timestamp {
-            font-size: 14px;
+            font-size: 16px;
             opacity: 0.8;
             margin-top: 5px;
         }
@@ -137,10 +137,10 @@
         /* Mobile Adjustments */
         @media (max-width: 768px) {
             .discord-text {
-                font-size: 24px;
+                font-size: 28px;
             }
             .timestamp {
-                font-size: 12px;
+                font-size: 14px;
             }
         }
     </style>
@@ -172,30 +172,28 @@
 
             // Matrix Effect on Discord Text
             const finalText = "c22ww";
-            let binaryChars = ["0", "1"];
 
             function revealMatrixEffect(element, text, delay) {
-                let scrambledText = Array(text.length).fill("").map(() => "010101");
+                let binaryText = text.split("").map(() => "010101");
 
-                element.innerHTML = scrambledText.join(" ");
+                element.innerHTML = binaryText.join(" ");
 
-                scrambledText.forEach((_, index) => {
+                binaryText.forEach((_, index) => {
                     setTimeout(() => {
-                        element.innerHTML = element.innerHTML.replace(
-                            /[01]+/,
-                            text[index] || ""
-                        );
+                        let currentText = element.innerHTML.split(" ");
+                        currentText[index] = text[index] || "";
+                        element.innerHTML = currentText.join(" ");
                     }, index * delay);
                 });
             }
 
-            setTimeout(() => revealMatrixEffect(discordText, finalText, 300), 1000);
+            setTimeout(() => revealMatrixEffect(discordText, finalText, 400), 1000);
 
             // Flashing Timestamp with Matrix Effect
             function updateTime() {
                 const now = new Date();
                 const formattedTime = now.toLocaleTimeString();
-                revealMatrixEffect(timestampElement, formattedTime, 150);
+                revealMatrixEffect(timestampElement, formattedTime, 200);
             }
 
             setInterval(updateTime, 1000);
@@ -213,16 +211,16 @@
                 cursor.style.top = `${touch.clientY}px`;
             });
 
-            // Create Cloud Effect (Very Few, Slow, Only at Top)
+            // Create Cloud Effect (Less, Slow, Only at Top)
             function createClouds() {
-                for (let i = 0; i < 3; i++) {
+                for (let i = 0; i < 2; i++) {
                     let cloud = document.createElement("div");
                     cloud.classList.add("cloud");
                     cloud.style.top = `${Math.random() * 20}vh`;
                     cloud.style.left = `-${Math.random() * 200}px`;
                     cloud.style.width = `${Math.random() * 200 + 100}px`;
                     cloud.style.height = `${Math.random() * 100 + 50}px`;
-                    cloud.style.animationDuration = `${Math.random() * 40 + 20}s`;
+                    cloud.style.animationDuration = `${Math.random() * 40 + 30}s`;
                     cloudContainer.appendChild(cloud);
                 }
             }
@@ -245,4 +243,16 @@
             createRain();
 
             // Title Animation
-            const titles = ['#', '#d', '#de', '#dea', '#dead', '#deads', '#deadsh', '#deadsho', '#deadshot', '#deadshot', '#dea
+            const titles = ['#', '#d', '#de', '#dea', '#dead', '#deads', '#deadsh', '#deadsho', '#deadshot', '#deadshot', '#deadsho', '#deadsh', '#deads', '#dead', '#dea', '#de', '#d', '#'];
+            let index = 0;
+
+            function changeTitle() {
+                document.title = titles[index];
+                index = (index + 1) % titles.length;
+                setTimeout(changeTitle, 200);
+            }
+            changeTitle();
+        });
+    </script>
+</body>
+</html>
