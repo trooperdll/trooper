@@ -18,6 +18,7 @@
             cursor: none;
             user-select: none;
             text-align: center;
+            position: relative;
         }
 
         /* Custom Cursor */
@@ -33,37 +34,29 @@
             transform: translate(-50%, -50%);
         }
 
-        /* ASCII Art */
-        .ascii-art-container {
-            display: inline-block;
-            font-size: 14px;
-            line-height: 1.2;
-            color: red;
-            position: relative;
-        }
-
-        .ascii-line {
-            white-space: pre;
-            display: block;
-            transition: opacity 0.5s ease, transform 0.3s ease;
-            position: relative;
-        }
-
-        /* Particle Effect */
-        .particle {
+        /* Rain Particles */
+        .rain-container {
             position: absolute;
-            width: 3px;
-            height: 3px;
-            background-color: white;
-            opacity: 0.8;
-            border-radius: 50%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
-            animation: fade-out 0.5s ease-out forwards;
+            overflow: hidden;
         }
 
-        @keyframes fade-out {
-            from { transform: scale(1); opacity: 1; }
-            to { transform: scale(2); opacity: 0; }
+        .rain-drop {
+            position: absolute;
+            width: 2px;
+            height: 15px;
+            background-color: rgba(255, 0, 0, 0.7);
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            from { transform: translateY(-100vh); }
+            to { transform: translateY(100vh); }
         }
 
         /* Flashing Effects */
@@ -92,7 +85,6 @@
 
         /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .ascii-art-container { font-size: 10px; }
             .discord-text { font-size: 14px; }
             .timestamp { font-size: 12px; }
         }
@@ -103,95 +95,5 @@
     <!-- Custom Cursor -->
     <div class="custom-cursor" id="cursor"></div>
 
-    <!-- ASCII Art Container -->
-    <div class="ascii-art-container" id="asciiArtContainer">
-        <div class="ascii-line">     .-""""-.</div>
-        <div class="ascii-line">    / -   -  \</div>
-        <div class="ascii-line">   |  .-. .- |</div>
-        <div class="ascii-line">   |  \o| |o (</div>
-        <div class="ascii-line">   \     ^    \</div>
-        <div class="ascii-line">    '.  )--'  /</div>
-        <div class="ascii-line">      '-...-'</div>
-    </div>
-
-    <!-- Discord Text (Typewriter + Matrix Effect) -->
-    <div class="discord-text flashing" id="discordText"></div>
-
-    <!-- Timestamp -->
-    <div class="timestamp flashing-timestamp" id="timestamp"></div>
-
-    <script>
-        const discordText = document.getElementById("discordText");
-        const timestampElement = document.getElementById("timestamp");
-        const cursor = document.getElementById("cursor");
-        const asciiArtContainer = document.getElementById("asciiArtContainer");
-        const asciiLines = document.querySelectorAll(".ascii-line");
-
-        // Matrix Effect on Discord Text
-        const finalText = "discord = c22ww";
-        let matrixText = "0101010101010101010101".split("");
-
-        function revealMatrixEffect() {
-            discordText.innerHTML = "";
-            matrixText.forEach((char, index) => {
-                let span = document.createElement("span");
-                span.textContent = char;
-                discordText.appendChild(span);
-                setTimeout(() => {
-                    span.textContent = finalText[index] || "";
-                    span.classList.add("flashing");
-                }, index * 700);
-            });
-        }
-
-        setTimeout(revealMatrixEffect, 1000);
-
-        // Flashing Timestamp
-        function updateTime() {
-            const now = new Date();
-            timestampElement.textContent = now.toLocaleTimeString();
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
-
-        // Custom Cursor Movement
-        document.addEventListener("mousemove", (e) => {
-            cursor.style.left = `${e.clientX}px`;
-            cursor.style.top = `${e.clientY}px`;
-        });
-
-        document.addEventListener("touchmove", (e) => {
-            let touch = e.touches[0];
-            cursor.style.left = `${touch.clientX}px`;
-            cursor.style.top = `${touch.clientY}px`;
-        });
-
-        // ASCII Art Particle Effect (Each Part)
-        asciiLines.forEach((line) => {
-            line.addEventListener("mouseenter", (e) => {
-                line.style.opacity = 0;
-                for (let i = 0; i < 5; i++) {
-                    let particle = document.createElement("div");
-                    particle.classList.add("particle");
-                    let xOffset = (Math.random() - 0.5) * 20;
-                    let yOffset = (Math.random() - 0.5) * 20;
-                    particle.style.left = `${e.clientX + xOffset}px`;
-                    particle.style.top = `${e.clientY + yOffset}px`;
-                    document.body.appendChild(particle);
-
-                    setTimeout(() => {
-                        particle.remove();
-                    }, 500);
-                }
-            });
-
-            line.addEventListener("mouseleave", () => {
-                setTimeout(() => {
-                    line.style.opacity = 1;
-                }, 500);
-            });
-        });
-    </script>
-
-</body>
-</html>
+    <!-- Rain Effect -->
+    <div class="rain-container" id="rain
