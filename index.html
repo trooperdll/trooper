@@ -33,76 +33,34 @@
             transform: translate(-50%, -50%);
         }
 
-        /* Rain Effect */
-        .rain-container {
+        /* Cloud Effect */
+        .cloud-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            perspective: 800px;
+            overflow: hidden;
         }
 
-        .rain-drop {
+        .cloud {
             position: absolute;
-            width: 2px;
-            height: 20px;
-            background-color: rgba(255, 0, 0, 0.6);
-            opacity: 0.7;
-            animation: fall linear infinite;
-            transform-origin: center;
-        }
-
-        @keyframes fall {
-            from {
-                transform: translate3d(0, -100vh, 0) scale(1);
-                opacity: 0.8;
-            }
-            to {
-                transform: translate3d(0, 100vh, -200px) scale(0.7);
-                opacity: 0;
-            }
-        }
-
-        /* ASCII Art */
-        .ascii-art-container {
-            display: inline-block;
-            text-align: center;
-            position: relative;
-            line-height: 1.1;
-        }
-
-        .ascii-line {
-            color: red;
-            font-size: 10px;
-            white-space: pre;
-            display: block;
-            opacity: 1;
-            transition: opacity 0.5s ease, transform 0.3s ease;
-            position: relative;
-        }
-
-        /* Particle Effect */
-        .particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background-color: white;
-            opacity: 0.8;
+            width: 150px;
+            height: 80px;
+            background: white;
+            opacity: 0.2;
             border-radius: 50%;
-            pointer-events: none;
-            animation: fade-out 0.5s ease-out forwards;
+            filter: blur(20px);
+            animation: moveClouds linear infinite;
         }
 
-        @keyframes fade-out {
+        @keyframes moveClouds {
             from {
-                transform: scale(1);
-                opacity: 1;
+                transform: translateX(-200px);
             }
             to {
-                transform: scale(2);
-                opacity: 0;
+                transform: translateX(110vw);
             }
         }
 
@@ -161,28 +119,13 @@
 </head>
 <body>
 
-    <!-- Red Rain Particle Effect -->
-    <div class="rain-container" id="rainContainer"></div>
+    <!-- Cloud Effect -->
+    <div class="cloud-container" id="cloudContainer"></div>
 
     <!-- Custom Cursor -->
     <div class="custom-cursor" id="cursor"></div>
 
-    <!-- ASCII Art Container -->
-    <div class="ascii-art-container" id="asciiArtContainer">
-        <pre class="ascii-line">
-        __
-    ,::%%n
- ,-::%%%%%%=.
- /:::%%%(:  "-:.
- ,:::%:%%%f:     :
- f:::%:%%%%,   ."`.
- i::::%%:%%%%, .',-t
- j::::::%:%%%%i 'i  `i
- ::::::::%:%%%%%  :_-=".
-        </pre>
-    </div>
-
-    <!-- Discord Text (Typewriter + Glitch Effect) -->
+    <!-- Discord Text (Glitch Effect) -->
     <div class="discord-text flashing glitch" id="discordText"></div>
 
     <!-- Timestamp -->
@@ -193,30 +136,10 @@
             const discordText = document.getElementById("discordText");
             const timestampElement = document.getElementById("timestamp");
             const cursor = document.getElementById("cursor");
-            const rainContainer = document.getElementById("rainContainer");
-            const asciiLines = document.querySelectorAll(".ascii-line");
+            const cloudContainer = document.getElementById("cloudContainer");
 
-            // Matrix Effect on Discord Text
-            const finalText = "discord = c22ww";
-            let matrixText = Array(finalText.length).fill("0");
-
-            function revealMatrixEffect() {
-                discordText.innerHTML = "";
-                matrixText.forEach((_, index) => {
-                    let span = document.createElement("span");
-                    span.textContent = Math.random() > 0.5 ? "0" : "1";
-                    discordText.appendChild(span);
-
-                    let delay = index * (Math.random() * 250 + 200); // More randomness
-
-                    setTimeout(() => {
-                        span.textContent = finalText[index] || "";
-                        span.classList.add("flashing", "glitch");
-                    }, delay);
-                });
-            }
-
-            setTimeout(revealMatrixEffect, 2000);
+            // Set Discord Text
+            discordText.textContent = "c22ww";
 
             // Flashing Timestamp
             function updateTime() {
@@ -238,38 +161,21 @@
                 cursor.style.top = `${touch.clientY}px`;
             });
 
-            // ASCII Art Particle Effect
-            asciiLines.forEach((line) => {
-                line.addEventListener("mouseenter", (e) => {
-                    for (let i = 0; i < 8; i++) { // More particles for a better effect
-                        let particle = document.createElement("div");
-                        particle.classList.add("particle");
-                        let xOffset = (Math.random() - 0.5) * 30;
-                        let yOffset = (Math.random() - 0.5) * 30;
-                        particle.style.left = `${e.clientX + xOffset}px`;
-                        particle.style.top = `${e.clientY + yOffset}px`;
-                        document.body.appendChild(particle);
-
-                        setTimeout(() => {
-                            particle.remove();
-                        }, 500);
-                    }
-                });
-            });
-
-            // Create Rain Effect
-            function createRain() {
-                for (let i = 0; i < 80; i++) {
-                    let drop = document.createElement("div");
-                    drop.classList.add("rain-drop");
-                    drop.style.left = `${Math.random() * 100}vw`;
-                    drop.style.animationDuration = `${Math.random() * 2 + 1}s`;
-                    drop.style.animationDelay = `${Math.random() * 2}s`;
-                    rainContainer.appendChild(drop);
+            // Create Cloud Effect
+            function createClouds() {
+                for (let i = 0; i < 10; i++) {
+                    let cloud = document.createElement("div");
+                    cloud.classList.add("cloud");
+                    cloud.style.top = `${Math.random() * 100}vh`;
+                    cloud.style.left = `-${Math.random() * 200}px`;
+                    cloud.style.width = `${Math.random() * 200 + 100}px`;
+                    cloud.style.height = `${Math.random() * 100 + 50}px`;
+                    cloud.style.animationDuration = `${Math.random() * 15 + 10}s`;
+                    cloudContainer.appendChild(cloud);
                 }
             }
 
-            createRain();
+            createClouds();
 
             // Title Animation
             const titles = ['#', '#d', '#de', '#dea', '#dead', '#deads', '#deadsh', '#deadsho', '#deadshot', '#deadshot', '#deadsho', '#deadsh', '#deads', '#dead', '#dea', '#de', '#d', '#'];
