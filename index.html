@@ -39,17 +39,17 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 20%;
             pointer-events: none;
             overflow: hidden;
         }
 
         .cloud {
             position: absolute;
-            width: 150px;
-            height: 80px;
+            width: 200px;
+            height: 100px;
             background: white;
-            opacity: 0.15;
+            opacity: 0.1;
             border-radius: 50%;
             filter: blur(20px);
             animation: moveClouds linear infinite;
@@ -64,7 +64,7 @@
             }
         }
 
-        /* Rain Particle Effect */
+        /* Rain Particle Effect (3D) */
         .rain-container {
             position: fixed;
             top: 0;
@@ -82,15 +82,16 @@
             background-color: rgba(255, 0, 0, 0.6);
             opacity: 0.7;
             animation: fall linear infinite;
+            transform-origin: center;
         }
 
         @keyframes fall {
             from {
-                transform: translateY(-10px);
+                transform: translateY(-10px) scale(0.8);
                 opacity: 0;
             }
             to {
-                transform: translateY(100vh);
+                transform: translateY(100vh) scale(1);
                 opacity: 1;
             }
         }
@@ -121,6 +122,12 @@
             animation: flash-red-white-black 1.5s infinite alternate;
         }
 
+        /* Enlarged c22ww */
+        .discord-text {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
         .timestamp {
             font-size: 14px;
             opacity: 0.8;
@@ -130,7 +137,7 @@
         /* Mobile Adjustments */
         @media (max-width: 768px) {
             .discord-text {
-                font-size: 14px;
+                font-size: 24px;
             }
             .timestamp {
                 font-size: 12px;
@@ -165,20 +172,19 @@
 
             // Matrix Effect on Discord Text
             const finalText = "c22ww";
-            let matrixText = "0101010101010".split("");
+            let binaryChars = ["0", "1"];
 
             function revealMatrixEffect(element, text, delay) {
-                element.innerHTML = "";
-                let scrambledText = text.split("").map(() => "010101");
-                
-                scrambledText.forEach((charSet, index) => {
-                    let span = document.createElement("span");
-                    span.textContent = charSet;
-                    element.appendChild(span);
-                    
+                let scrambledText = Array(text.length).fill("").map(() => "010101");
+
+                element.innerHTML = scrambledText.join(" ");
+
+                scrambledText.forEach((_, index) => {
                     setTimeout(() => {
-                        span.textContent = text[index] || "";
-                        span.classList.add("glitch");
+                        element.innerHTML = element.innerHTML.replace(
+                            /[01]+/,
+                            text[index] || ""
+                        );
                     }, index * delay);
                 });
             }
@@ -207,23 +213,23 @@
                 cursor.style.top = `${touch.clientY}px`;
             });
 
-            // Create Cloud Effect (Fewer Clouds)
+            // Create Cloud Effect (Very Few, Slow, Only at Top)
             function createClouds() {
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < 3; i++) {
                     let cloud = document.createElement("div");
                     cloud.classList.add("cloud");
-                    cloud.style.top = `${Math.random() * 100}vh`;
+                    cloud.style.top = `${Math.random() * 20}vh`;
                     cloud.style.left = `-${Math.random() * 200}px`;
                     cloud.style.width = `${Math.random() * 200 + 100}px`;
                     cloud.style.height = `${Math.random() * 100 + 50}px`;
-                    cloud.style.animationDuration = `${Math.random() * 20 + 15}s`;
+                    cloud.style.animationDuration = `${Math.random() * 40 + 20}s`;
                     cloudContainer.appendChild(cloud);
                 }
             }
 
             createClouds();
 
-            // Create Optimized Red Rain Effect
+            // Create Optimized Red Rain Effect (3D)
             function createRain() {
                 for (let i = 0; i < 80; i++) {
                     let drop = document.createElement("div");
@@ -231,6 +237,7 @@
                     drop.style.left = `${Math.random() * 100}vw`;
                     drop.style.animationDuration = `${Math.random() * 2 + 1}s`;
                     drop.style.animationDelay = `${Math.random() * 2}s`;
+                    drop.style.transform = `scale(${Math.random() * 0.5 + 0.5})`;
                     rainContainer.appendChild(drop);
                 }
             }
@@ -238,16 +245,4 @@
             createRain();
 
             // Title Animation
-            const titles = ['#', '#d', '#de', '#dea', '#dead', '#deads', '#deadsh', '#deadsho', '#deadshot', '#deadshot', '#deadsho', '#deadsh', '#deads', '#dead', '#dea', '#de', '#d', '#'];
-            let index = 0;
-
-            function changeTitle() {
-                document.title = titles[index];
-                index = (index + 1) % titles.length;
-                setTimeout(changeTitle, 200);
-            }
-            changeTitle();
-        });
-    </script>
-</body>
-</html>
+            const titles = ['#', '#d', '#de', '#dea', '#dead', '#deads', '#deadsh', '#deadsho', '#deadshot', '#deadshot', '#dea
