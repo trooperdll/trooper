@@ -52,7 +52,7 @@ AudioPlayer.src))
          proximity: 100,
          mouseForce: 300,
          color: "#c0c0c0",
-     });
+     }); 
 
      function resizeParticle() {
          nextParticle.width = window.innerWidth;
