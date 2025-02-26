@@ -171,92 +171,104 @@
     <div class="timestamp flashing-timestamp" id="timestamp"></div>
 
     <script>
-        const discordText = document.getElementById("discordText");
-        const timestampElement = document.getElementById("timestamp");
-        const cursor = document.getElementById("cursor");
-        const rainContainer = document.getElementById("rainContainer");
-        const asciiArtContainer = document.getElementById("asciiArtContainer");
-        const asciiLines = document.querySelectorAll(".ascii-line");
+        document.addEventListener('DOMContentLoaded', () => {
+            const discordText = document.getElementById("discordText");
+            const timestampElement = document.getElementById("timestamp");
+            const cursor = document.getElementById("cursor");
+            const rainContainer = document.getElementById("rainContainer");
+            const asciiArtContainer = document.getElementById("asciiArtContainer");
+            const asciiLines = document.querySelectorAll(".ascii-line");
 
-        // Matrix Effect on Discord Text
-        const finalText = "discord = c22ww";
-        let matrixText = "0101010101010".split("");
+            // Matrix Effect on Discord Text
+            const finalText = "discord = c22ww";
+            let matrixText = "0101010101010".split("");
 
-        function revealMatrixEffect() {
-            discordText.innerHTML = "";
-            matrixText.forEach((char, index) => {
-                let span = document.createElement("span");
-                span.textContent = char;
-                discordText.appendChild(span);
-                setTimeout(() => {
-                    span.textContent = finalText[index] || "";
-                    span.classList.add("flashing");
-                }, index * 100);
-            });
-        }
-
-        setTimeout(revealMatrixEffect, 1000);
-
-        // Flashing Timestamp
-        function updateTime() {
-            const now = new Date();
-            timestampElement.textContent = now.toLocaleTimeString();
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
-
-        // Custom Cursor Movement
-        document.addEventListener("mousemove", (e) => {
-            cursor.style.left = `${e.clientX}px`;
-            cursor.style.top = `${e.clientY}px`;
-        });
-
-        document.addEventListener("touchmove", (e) => {
-            let touch = e.touches[0];
-            cursor.style.left = `${touch.clientX}px`;
-            cursor.style.top = `${touch.clientY}px`;
-        });
-
-        // ASCII Art Particle Effect
-        asciiLines.forEach((line) => {
-            line.addEventListener("mouseenter", (e) => {
-                line.style.opacity = 0;
-                for (let i = 0; i < 5; i++) {
-                    let particle = document.createElement("div");
-                    particle.classList.add("particle");
-                    let xOffset = (Math.random() - 0.5) * 20;
-                    let yOffset = (Math.random() - 0.5) * 20;
-                    particle.style.left = `${e.clientX + xOffset}px`;
-                    particle.style.top = `${e.clientY + yOffset}px`;
-                    document.body.appendChild(particle);
-
+            function revealMatrixEffect() {
+                discordText.innerHTML = "";
+                matrixText.forEach((char, index) => {
+                    let span = document.createElement("span");
+                    span.textContent = char;
+                    discordText.appendChild(span);
                     setTimeout(() => {
-                        particle.remove();
-                    }, 500);
-                }
-            });
-
-            line.addEventListener("mouseleave", () => {
-                setTimeout(() => {
-                    line.style.opacity = 1;
-                }, 500);
-            });
-        });
-
-        // Create Optimized Red Rain Effect
-        function createRain() {
-            for (let i = 0; i < 80; i++) {
-                let drop = document.createElement("div");
-                drop.classList.add("rain-drop");
-                drop.style.left = `${Math.random() * 100}vw`;
-                drop.style.animationDuration = `${Math.random() * 2 + 1}s`;
-                drop.style.animationDelay = `${Math.random() * 2}s`;
-                rainContainer.appendChild(drop);
+                        span.textContent = finalText[index] || "";
+                        span.classList.add("flashing");
+                    }, index * 100);
+                });
             }
-        }
 
-        createRain();
+            setTimeout(revealMatrixEffect, 1000);
+
+            // Flashing Timestamp
+            function updateTime() {
+                const now = new Date();
+                timestampElement.textContent = now.toLocaleTimeString();
+            }
+            setInterval(updateTime, 1000);
+            updateTime();
+
+            // Custom Cursor Movement
+            document.addEventListener("mousemove", (e) => {
+                cursor.style.left = `${e.clientX}px`;
+                cursor.style.top = `${e.clientY}px`;
+            });
+
+            document.addEventListener("touchmove", (e) => {
+                let touch = e.touches[0];
+                cursor.style.left = `${touch.clientX}px`;
+                cursor.style.top = `${touch.clientY}px`;
+            });
+
+            // ASCII Art Particle Effect
+            asciiLines.forEach((line) => {
+                line.addEventListener("mouseenter", (e) => {
+                    line.style.opacity = 0;
+                    for (let i = 0; i < 5; i++) {
+                        let particle = document.createElement("div");
+                        particle.classList.add("particle");
+                        let xOffset = (Math.random() - 0.5) * 20;
+                        let yOffset = (Math.random() - 0.5) * 20;
+                        particle.style.left = `${e.clientX + xOffset}px`;
+                        particle.style.top = `${e.clientY + yOffset}px`;
+                        document.body.appendChild(particle);
+
+                        setTimeout(() => {
+                            particle.remove();
+                        }, 500);
+                    }
+                });
+
+                line.addEventListener("mouseleave", () => {
+                    setTimeout(() => {
+                        line.style.opacity = 1;
+                    }, 500);
+                });
+            });
+
+            // Create Optimized Red Rain Effect
+            function createRain() {
+                for (let i = 0; i < 80; i++) {
+                    let drop = document.createElement("div");
+                    drop.classList.add("rain-drop");
+                    drop.style.left = `${Math.random() * 100}vw`;
+                    drop.style.animationDuration = `${Math.random() * 2 + 1}s`;
+                    drop.style.animationDelay = `${Math.random() * 2}s`;
+                    rainContainer.appendChild(drop);
+                }
+            }
+
+            createRain();
+
+            // Title Animation
+            const titles = ['#', '#d', '#de', '#dea', '#dead', '#deads', '#deadsh', '#deadsho', '#deadshot', '#deadshot', '#deadsho', '#deadsh', '#deads', '#dead', '#dea', '#de', '#d', '#'];
+            let index = 0;
+
+            function changeTitle() {
+                document.title = titles[index];
+                index = (index + 1) % titles.length;
+                setTimeout(changeTitle, 200);
+            }
+            changeTitle();
+        });
     </script>
-
 </body>
 </html>
