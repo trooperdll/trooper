@@ -8,22 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Choose a random track from the array
         const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
         AudioPlayer.src = randomTrack;
+        AudioPlayer.play()
+            .then(() => console.log('Playing track:', AudioPlayer.src))
+            .catch(err => {
+                console.warn('Audio playback issue:', err);
+            });
     }
-
-    // Entry overlay function
-    window.enterSite = function() {
-        const overlay = document.getElementById('enter-overlay');
-        if (overlay) {
-            overlay.style.display = 'none';
-            if (AudioPlayer) {
-                AudioPlayer.play()
-                    .then(() => console.log('Playing track:', AudioPlayer.src))
-                    .catch(err => {
-                        console.warn('Audio playback issue:', err);
-                    });
-            }
-        }
-    };
 
     // Title Animation
     const titles = ['#', '#d', '#de', '#dea', '#dead', '#deads', '#deadsh', '#deadsho', '#deadshot', '#deadshot', '#deadsho', '#deadsh', '#deads', '#dead', '#dea', '#de', '#d', '#'];
