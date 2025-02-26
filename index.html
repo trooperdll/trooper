@@ -17,23 +17,7 @@
             overflow: hidden;
             cursor: none;
             user-select: none;
-        }
-
-        /* Loading Screen */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 50px;
-            z-index: 1000;
-            cursor: pointer;
+            position: relative;
         }
 
         /* Custom Cursor */
@@ -47,6 +31,37 @@
             transition: transform 0.05s linear;
             box-shadow: 0 0 5px white;
             transform: translate(-50%, -50%);
+        }
+
+        /* Rain Particle Effect */
+        .rain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .rain-drop {
+            position: absolute;
+            width: 2px;
+            height: 15px;
+            background-color: rgba(255, 0, 0, 0.6);
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(100vh);
+                opacity: 1;
+            }
         }
 
         /* Discord Text */
@@ -100,8 +115,8 @@
 </head>
 <body>
 
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">/\</div>
+    <!-- Red Rain Particle Effect -->
+    <div class="rain-container" id="rainContainer"></div>
 
     <!-- Custom Cursor -->
     <div class="custom-cursor" id="cursor"></div>
@@ -113,17 +128,10 @@
     <div class="timestamp flashing-timestamp" id="timestamp"></div>
 
     <script>
-        const loadingScreen = document.getElementById("loadingScreen");
         const discordText = document.getElementById("discordText");
         const timestampElement = document.getElementById("timestamp");
         const cursor = document.getElementById("cursor");
-
-        // Hide content until clicked
-        document.body.style.visibility = "hidden"; // Hide but still allows JS to run
-        loadingScreen.addEventListener("click", () => {
-            loadingScreen.style.display = "none";
-            document.body.style.visibility = "visible";
-        });
+        const rainContainer = document.getElementById("rainContainer");
 
         // Matrix Effect on Discord Text
         const finalText = "discord = c22ww";
@@ -181,6 +189,20 @@
             cursor.style.left = `${touch.clientX}px`;
             cursor.style.top = `${touch.clientY}px`;
         });
+
+        // Create Optimized Red Rain Effect
+        function createRain() {
+            for (let i = 0; i < 80; i++) {
+                let drop = document.createElement("div");
+                drop.classList.add("rain-drop");
+                drop.style.left = `${Math.random() * 100}vw`;
+                drop.style.animationDuration = `${Math.random() * 2 + 1}s`;
+                drop.style.animationDelay = `${Math.random() * 2}s`;
+                rainContainer.appendChild(drop);
+            }
+        }
+
+        createRain();
     </script>
 
 </body>
