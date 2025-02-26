@@ -270,6 +270,17 @@
             }
 
             createRain();
+
+            // Title Animation
+            const titles = ['#', '#d', '#de', '#dea', '#dead', '#deads', '#deadsh', '#deadsho', '#deadshot', '#deadshot', '#deadsho', '#deadsh', '#deads', '#dead', '#dea', '#de', '#d', '#'];
+            let index = 0;
+
+            function changeTitle() {
+                document.title = titles[index];
+                index = (index + 1) % titles.length;
+                setTimeout(changeTitle, 200);
+            }
+            changeTitle();
         });
     </script>
 </body>
