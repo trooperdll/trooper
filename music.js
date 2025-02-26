@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const audio = new Audio("your-audio-file.mp3"); // Replace with your MP3 file URL
+    const audio = new Audio("Maes - Bercy.mp3"); // Replace with your MP3 file URL
     const playButton = document.getElementById("playButton");
     const pauseButton = document.getElementById("pauseButton");
     const volumeSlider = document.getElementById("volumeSlider");
