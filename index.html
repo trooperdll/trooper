@@ -29,7 +29,6 @@
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            transition: transform 0.05s linear;
             box-shadow: 0 0 5px white;
             transform: translate(-50%, -50%);
         }
@@ -73,8 +72,8 @@
             100% { color: red; }
         }
 
-        .flashing { animation: flash-red-white 1s infinite alternate; }
-        .flashing-timestamp { animation: flash-red-white-black 1.5s infinite alternate; }
+        .flashing { animation: flash-red-white 0.8s infinite alternate; }
+        .flashing-timestamp { animation: flash-red-white-black 1.2s infinite alternate; }
 
         /* Timestamp */
         .timestamp {
@@ -96,4 +95,77 @@
     <div class="custom-cursor" id="cursor"></div>
 
     <!-- Rain Effect -->
-    <div class="rain-container" id="rain
+    <div class="rain-container" id="rainContainer"></div>
+
+    <!-- Discord Text (Typewriter + Matrix Effect) -->
+    <div class="discord-text flashing" id="discordText"></div>
+
+    <!-- Timestamp -->
+    <div class="timestamp flashing-timestamp" id="timestamp"></div>
+
+    <script>
+        const discordText = document.getElementById("discordText");
+        const timestampElement = document.getElementById("timestamp");
+        const cursor = document.getElementById("cursor");
+        const rainContainer = document.getElementById("rainContainer");
+
+        // Matrix Effect on Discord Text
+        const finalText = "discord = c22ww";
+        let matrixText = "010101010101010101010101".split("");
+
+        function revealMatrixEffect() {
+            discordText.innerHTML = "";
+            matrixText.forEach((char, index) => {
+                let span = document.createElement("span");
+                span.textContent = char;
+                discordText.appendChild(span);
+                setTimeout(() => {
+                    span.textContent = finalText[index] || "";
+                    span.classList.add("flashing");
+                }, index * 500);
+            });
+        }
+
+        setTimeout(revealMatrixEffect, 1000);
+
+        // Flashing Timestamp
+        function updateTime() {
+            const now = new Date();
+            timestampElement.textContent = now.toLocaleTimeString();
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Custom Cursor Movement
+        document.addEventListener("mousemove", (e) => {
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+        });
+
+        document.addEventListener("touchmove", (e) => {
+            let touch = e.touches[0];
+            cursor.style.left = `${touch.clientX}px`;
+            cursor.style.top = `${touch.clientY}px`;
+        });
+
+        // Red Rain Particle Effect
+        function createRain() {
+            rainContainer.innerHTML = "";
+            let numDrops = Math.floor(window.innerWidth / 4);
+            for (let i = 0; i < numDrops; i++) {
+                let drop = document.createElement("div");
+                drop.classList.add("rain-drop");
+                drop.style.left = `${Math.random() * 100}vw`;
+                drop.style.animationDuration = `${Math.random() * 1.5 + 0.5}s`;
+                drop.style.animationDelay = `${Math.random() * 2}s`;
+                rainContainer.appendChild(drop);
+            }
+        }
+
+        createRain();
+        window.addEventListener("resize", createRain);
+
+    </script>
+
+</body>
+</html>
