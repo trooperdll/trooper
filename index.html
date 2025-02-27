@@ -3,184 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content=" i hate skids and fits">
-    <meta name="keywords" content="skid, lol, hate, jews, funny, ascii">
-    <meta name="author" content="c22ww">
-    <title id="dynamic-title">#</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: black;
-            font-family: monospace, sans-serif;
-            color: white;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            background-image: url('https://www.transparenttextures.com/patterns/stardust.png'); /* Starry background */
-            background-size: cover;
-        }
-
-        /* Custom Cursor */
-        body, * {
-            cursor: url('https://example.com/your-cool-cursor.png'), auto; /* Replace with your actual cursor image */
-        }
-
-        /* ASCII Art Styling */
-        .ascii-art-container {
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 14px;
-            text-align: center;
-            color: white;
-            z-index: -1; /* Ensure ASCII art stays in the background */
-        }
-
-        .ascii-line {
-            display: block;
-        }
-
-        /* c22ww text */
-        .c22ww-text {
-            font-size: 30px;
-            font-weight: bold;
-            text-align: center;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1; /* Ensure text stays above the ASCII art */
-            color: white;
-        }
-
-        .audio-container {
-            position: absolute;
-            visibility: hidden;
-        }
-
-        /* Mobile support */
-        @media (max-width: 768px) {
-            .ascii-art-container {
-                font-size: 12px;
-            }
-
-            .c22ww-text {
-                font-size: 20px;
-            }
-        }
-
-        /* Particle effect */
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background-color: white;
-            width: 2px;
-            height: 2px;
-            animation: particle-animation 1.5s linear infinite;
-            pointer-events: none; /* Ensure particles don't interfere with text or other elements */
-        }
-
-        @keyframes particle-animation {
-            0% {
-                transform: translate(0, 0);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(var(--x), var(--y));
-                opacity: 0;
-            }
-        }
-
-        /* Title animation for #c22ww */
-        @keyframes titleChange {
-            0% {
-                content: "#c22ww";
-            }
-            100% {
-                content: "#c22ww";
-            }
-        }
-    </style>
+    <title>Link Sharing Platform</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <header>
+        <h1>Welcome to the Link Sharing Platform</h1>
+        <p>Share your favorite and useful links with the world!</p>
+    </header>
 
-    <!-- Audio -->
-    <div class="audio-container">
-        <audio id="background-audio" autoplay loop>
-            <source src="https://github.com/trooperdll/trooper/blob/main/track1.mp3" type="audio/mp3">
-            Your browser does not support the audio element.
-        </audio>
-    </div>
+    <section id="link-form">
+        <h2>Submit a Link</h2>
+        <form id="linkForm">
+            <input type="url" id="linkInput" placeholder="Enter link here" required>
+            <input type="text" id="descriptionInput" placeholder="Add a description (optional)">
+            <button type="submit">Submit Link</button>
+        </form>
+    </section>
 
-    <!-- ASCII Art -->
-    <div class="ascii-art-container">
-        <pre class="ascii-line">+--^----------,--------,-----,--------^-</pre>
-        <pre class="ascii-line">| |||||||||   `--------'     |          O</pre>
-        <pre class="ascii-line">`+---------------------------^----------|</pre>
-        <pre class="ascii-line">  `\_,---------,---------,--------------'</pre>
-        <pre class="ascii-line">    / XXXXXX /'|       /'</pre>
-        <pre class="ascii-line">   / XXXXXX /  `\    /'</pre>
-        <pre class="ascii-line">  / XXXXXX /`-------'</pre>
-        <pre class="ascii-line"> / XXXXXX /</pre>
-        <pre class="ascii-line">/ XXXXXX /</pre>
-        <pre class="ascii-line">(________(</pre>
-        <pre class="ascii-line"> `------'</pre>
-    </div>
+    <section id="link-list">
+        <h2>Shared Links</h2>
+        <ul id="links"></ul>
+    </section>
 
-    <!-- Text 'c22ww' -->
-    <div class="c22ww-text">
-        <span id="c22ww">c22ww</span>
-    </div>
+    <footer>
+        <p>Created with care. All links shared are for educational or positive purposes.</p>
+    </footer>
 
-    <script>
-        // Dynamic title change with # prefix
-        const title = document.getElementById('dynamic-title');
-        const text = "#c22ww";
-        let currentIndex = 0;
-
-        function updateTitle() {
-            title.innerText = text.substring(0, currentIndex + 1);
-            currentIndex++;
-            if (currentIndex >= text.length) {
-                currentIndex = 0; // Reset to start
-            }
-        }
-        setInterval(updateTitle, 1000); // Change every second
-
-        // Particle effect (blinking stars)
-        function createParticle(event) {
-            let x = event.clientX;
-            let y = event.clientY;
-            let particle = document.createElement('div');
-            particle.classList.add('particle');
-            document.body.appendChild(particle);
-
-            let deltaX = Math.random() * 200 - 100;
-            let deltaY = Math.random() * 200 - 100;
-            particle.style.setProperty('--x', deltaX + 'px');
-            particle.style.setProperty('--y', deltaY + 'px');
-            particle.style.top = y + 'px';
-            particle.style.left = x + 'px';
-
-            setTimeout(() => particle.remove(), 1500); // Remove particle after animation
-        }
-
-        document.body.addEventListener('mousemove', createParticle);
-
-        // Ensure audio works and is at 100% volume
-        const audioElement = document.getElementById('background-audio');
-        audioElement.volume = 1.0;  // Set volume to 100%
-
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
