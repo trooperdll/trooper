@@ -3,35 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>flanks site </title>
-    <link rel="stylesheet" href="styles.css">
+    <title>File Sharing Platform</title>
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/trooperdll/trooper/main/styles.css">
 </head>
 <body>
-    <header>
-        <h1>Link Sharing Platform</h1>
-        <p>Share and discover useful links</p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>File Sharing Platform</h1>
+            <p>Share your text files here</p>
+        </header>
 
-    <section id="link-form">
-        <h2>Submit a Link</h2>
-        <form id="linkForm">
-            <input type="url" id="linkInput" placeholder="Enter link here" required>
-            <input type="text" id="descriptionInput" placeholder="Optional description">
-            <button type="submit">Submit Link</button>
-        </form>
-    </section>
+        <section id="file-form">
+            <h2>Upload Your Text File</h2>
+            <form id="fileForm" enctype="multipart/form-data">
+                <input type="file" id="fileInput" accept=".txt" required>
+                <input type="text" id="descriptionInput" placeholder="Optional description">
+                <button type="submit">Upload File</button>
+            </form>
+        </section>
 
-    <section id="link-list">
-        <h2>Shared Links</h2>
-        <ul id="links"></ul>
-    </section>
+        <section id="file-list">
+            <h2>Shared Files</h2>
+            <ul id="files"></ul>
+        </section>
+    </div>
 
     <footer>
         <p>Created with care. Share responsibly!</p>
     </footer>
 
     <script src="script.js"></script>
-<link rel="stylesheet" href="https://raw.githubusercontent.com/trooperdll/trooper/main/styles.css">
-
 </body>
 </html>
