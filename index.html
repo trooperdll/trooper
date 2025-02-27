@@ -3,253 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>c22w</title>
+    <title>Windows 7</title>
     <style>
         body {
             margin: 0;
-            height: 100vh;
-            background-color: darkgray;
-            font-family: monospace;
+            padding: 0;
+            background: url('https://wallpaperaccess.com/full/472302.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            overflow: hidden;
-            cursor: none;
-            user-select: none;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        /* Windows 7 Window */
+        .window {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 600px;
+            text-align: center;
+            padding: 20px;
             position: relative;
         }
 
-        /* Custom Cursor */
-        .custom-cursor {
-            width: 8px;
-            height: 8px;
-            background-color: white;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            transition: transform 0.05s linear;
-            box-shadow: 0 0 5px white;
-            transform: translate(-50%, -50%);
-        }
-
-        /* Cloud Effect (Only at Top) */
-        .cloud-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 20%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .cloud {
-            position: absolute;
-            width: 150px;
-            height: 70px;
-            background: white;
-            opacity: 0.1;
-            border-radius: 50%;
-            filter: blur(20px);
-            animation: moveClouds linear infinite;
-        }
-
-        @keyframes moveClouds {
-            from {
-                transform: translateX(-200px);
-            }
-            to {
-                transform: translateX(110vw);
-            }
-        }
-
-        /* Rain Particle Effect (3D Look) */
-        .rain-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .rain-drop {
-            position: absolute;
-            width: 2px;
-            height: 15px;
-            background-color: rgba(255, 0, 0, 0.6);
-            opacity: 0.7;
-            animation: fall linear infinite;
-            transform-origin: center;
-        }
-
-        @keyframes fall {
-            from {
-                transform: translateY(-10px) scale(0.8);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(100vh) scale(1);
-                opacity: 1;
-            }
-        }
-
-        /* Glitch Effect */
-        @keyframes glitch {
-            0% { transform: translateX(0); }
-            20% { transform: translateX(-3px); }
-            40% { transform: translateX(3px); }
-            60% { transform: translateX(-1px); }
-            80% { transform: translateX(1px); }
-            100% { transform: translateX(0); }
-        }
-
-        .glitch {
-            animation: glitch 0.1s infinite alternate;
-        }
-
-        /* Flashing Effect */
-        @keyframes flash-red-white-black {
-            0% { color: red; }
-            33% { color: white; }
-            66% { color: black; }
-            100% { color: red; }
-        }
-
-        .flashing-timestamp {
-            animation: flash-red-white-black 1.5s infinite alternate;
-        }
-
-        /* Enlarged c22ww */
-        .discord-text {
-            font-size: 42px;
+        .window-header {
+            background: linear-gradient(to right, #0078d7, #0053a0);
+            color: white;
+            padding: 5px 10px;
             font-weight: bold;
+            text-align: left;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .timestamp {
+        .close-btn {
+            background: red;
+            color: white;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            border-radius: 50%;
+            cursor: pointer;
             font-size: 16px;
-            opacity: 0.8;
-            margin-top: 5px;
+            line-height: 20px;
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .discord-text {
-                font-size: 28px;
-            }
-            .timestamp {
-                font-size: 14px;
-            }
+        .content {
+            padding: 20px;
+        }
+
+        /* YouTube Embed */
+        iframe {
+            width: 100%;
+            height: 315px;
+            border: none;
+            border-radius: 6px;
+        }
+
+        /* Redirect Buttons */
+        .buttons {
+            margin-top: 20px;
+        }
+
+        .button {
+            background: #0078d7;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            background: #0053a0;
+        }
+
+        /* Windows 7 Taskbar */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .start-button {
+            background: url('https://upload.wikimedia.org/wikipedia/commons/a/a3/Windows_7_start_button.png') no-repeat center;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+
+        .task-icons {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .task-icons img {
+            width: 30px;
+            height: 30px;
+            margin: 0 10px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Cloud Effect -->
-    <div class="cloud-container" id="cloudContainer"></div>
+    <!-- Windows 7 Window -->
+    <div class="window">
+        <div class="window-header">
+            <span>Welcome to Windows 7</span>
+            <div class="close-btn" onclick="closeWindow()">×</div>
+        </div>
+        <div class="content">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+            <div class="buttons">
+                <a href="https://google.com" class="button">Google</a>
+                <a href="https://discord.com" class="button">Discord</a>
+                <a href="https://youtube.com" class="button">YouTube</a>
+            </div>
+        </div>
+    </div>
 
-    <!-- Red Rain Particle Effect -->
-    <div class="rain-container" id="rainContainer"></div>
-
-    <!-- Custom Cursor -->
-    <div class="custom-cursor" id="cursor"></div>
-
-    <!-- Discord Text (Glitch + Matrix Effect at Start) -->
-    <div class="discord-text glitch" id="discordText">c22ww</div>
-
-    <!-- Timestamp -->
-    <div class="timestamp flashing-timestamp" id="timestamp"></div>
+    <!-- Windows 7 Taskbar -->
+    <div class="taskbar">
+        <div class="start-button"></div>
+        <div class="task-icons">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Windows_7_Taskbar_Icon.png" alt="Windows Explorer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Windows_Media_Player_logo.png" alt="Media Player">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Internet_Explorer_7_Icon.png" alt="Internet Explorer">
+        </div>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const discordText = document.getElementById("discordText");
-            const timestampElement = document.getElementById("timestamp");
-            const cursor = document.getElementById("cursor");
-            const cloudContainer = document.getElementById("cloudContainer");
-            const rainContainer = document.getElementById("rainContainer");
-
-            // Matrix Effect on Discord Text (Only at Start)
-            function revealMatrixEffect(element, text, delay) {
-                let binaryText = text.split("").map(() => "010101");
-
-                element.innerHTML = binaryText.join(" ");
-
-                binaryText.forEach((_, index) => {
-                    setTimeout(() => {
-                        let currentText = element.innerHTML.split(" ");
-                        currentText[index] = text[index] || "";
-                        element.innerHTML = currentText.join(" ");
-                    }, index * delay);
-                });
-            }
-
-            setTimeout(() => revealMatrixEffect(discordText, "c22ww", 400), 1000);
-
-            // Flashing Timestamp (Normal)
-            function updateTime() {
-                const now = new Date();
-                timestampElement.textContent = now.toLocaleTimeString();
-            }
-
-            setInterval(updateTime, 1000);
-            updateTime();
-
-            // Custom Cursor Movement
-            document.addEventListener("mousemove", (e) => {
-                cursor.style.left = `${e.clientX}px`;
-                cursor.style.top = `${e.clientY}px`;
-            });
-
-            document.addEventListener("touchmove", (e) => {
-                let touch = e.touches[0];
-                cursor.style.left = `${touch.clientX}px`;
-                cursor.style.top = `${touch.clientY}px`;
-            });
-
-            // Create Cloud Effect (Less, Slow, Only at Top)
-            function createClouds() {
-                for (let i = 0; i < 2; i++) {
-                    let cloud = document.createElement("div");
-                    cloud.classList.add("cloud");
-                    cloud.style.top = `${Math.random() * 20}vh`;
-                    cloud.style.left = `-${Math.random() * 200}px`;
-                    cloud.style.width = `${Math.random() * 200 + 100}px`;
-                    cloud.style.height = `${Math.random() * 100 + 50}px`;
-                    cloud.style.animationDuration = `${Math.random() * 40 + 30}s`;
-                    cloudContainer.appendChild(cloud);
-                }
-            }
-
-            createClouds();
-
-            // Create Optimized Red Rain Effect (3D)
-            function createRain() {
-                for (let i = 0; i < 80; i++) {
-                    let drop = document.createElement("div");
-                    drop.classList.add("rain-drop");
-                    drop.style.left = `${Math.random() * 100}vw`;
-                    drop.style.animationDuration = `${Math.random() * 2 + 1}s`;
-                    drop.style.animationDelay = `${Math.random() * 2}s`;
-                    drop.style.transform = `scale(${Math.random() * 0.5 + 0.5})`;
-                    rainContainer.appendChild(drop);
-                }
-            }
-
-            createRain();
-
-            // Title Animation
-            const titles = ['#', '#d', '#de', '#dea', '#dead', '#deads', '#deadsh', '#deadsho', '#deadshot', '#deadshot', '#deadsho', '#deadsh', '#deads', '#dead', '#dea', '#de', '#d', '#'];
-            let index = 0;
-
-            function changeTitle() {
-                document.title = titles[index];
-                index = (index + 1) % titles.length;
-                setTimeout(changeTitle, 200);
-            }
-            changeTitle();
-        });
+        function closeWindow() {
+            document.querySelector('.window').style.display = 'none';
+        }
     </script>
+
 </body>
 </html>
