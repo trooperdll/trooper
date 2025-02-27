@@ -183,7 +183,7 @@
                     <div class="close-btn" onclick="closeWindow()">×</div>
                 </div>
                 <div class="content">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" allowfullscreen></iframe>
                     <div class="buttons">
                         <a href="https://google.com" class="button">Google</a>
                         <a href="https://discord.com" class="button">Discord</a>
@@ -222,6 +222,15 @@
             }
         }
         generateStars();
+
+        // Moving title effect
+        let titleText = "Windows 7 - Retro PC | ";
+        function moveTitle() {
+            titleText = titleText.substring(1) + titleText.charAt(0);
+            document.title = titleText;
+            setTimeout(moveTitle, 200);
+        }
+        moveTitle();
     </script>
 
 </body>
