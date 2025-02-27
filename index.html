@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="i watch porn.">
-    <meta name="keywords" content="im a skid lol">
+    <meta name="description" content=" i hate skids and fits">
+    <meta name="keywords" content="skid, lol, hate, jews, funny, ascii">
     <meta name="author" content="c22ww">
     <title id="dynamic-title">#</title>
 
@@ -25,6 +25,8 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png'); /* Starry background */
+            background-size: cover;
         }
 
         /* Custom Cursor */
@@ -41,6 +43,7 @@
             font-size: 14px;
             text-align: center;
             color: white;
+            z-index: -1; /* Ensure ASCII art stays in the background */
         }
 
         .ascii-line {
@@ -56,6 +59,8 @@
             top: 50%;
             left: 50%;
             transform: translateX(-50%);
+            z-index: 1; /* Ensure text stays above the ASCII art */
+            color: white;
         }
 
         .audio-container {
@@ -82,6 +87,7 @@
             width: 2px;
             height: 2px;
             animation: particle-animation 1.5s linear infinite;
+            pointer-events: none; /* Ensure particles don't interfere with text or other elements */
         }
 
         @keyframes particle-animation {
