@@ -1,44 +1,39 @@
-// Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('linkForm');
-    const linkInput = document.getElementById('linkInput');
+    const form = document.getElementById('fileForm');
+    const fileInput = document.getElementById('fileInput');
     const descriptionInput = document.getElementById('descriptionInput');
-    const linkList = document.getElementById('links');
+    const fileList = document.getElementById('files');
 
-    // Array to hold the links and their descriptions
-    let links = [];
+    let files = [];
 
-    // Handle form submission
     form.addEventListener('submit', (e) => {
-        e.preventDefault(); // Prevent the form from reloading the page
+        e.preventDefault();
 
-        const link = linkInput.value;
+        const file = fileInput.files[0];
         const description = descriptionInput.value;
 
-        if (link) {
-            // Add the new link to the array
-            links.push({ link, description });
+        if (file && file.type === "text/plain") {
+            const fileURL = URL.createObjectURL(file);
+            files.push({ file: fileURL, description, name: file.name });
 
-            // Clear the input fields
-            linkInput.value = '';
+            fileInput.value = '';
             descriptionInput.value = '';
 
-            // Update the link list
-            updateLinkList();
+            updateFileList();
+        } else {
+            alert("Please upload a valid text file.");
         }
     });
 
-    // Function to update the link list on the page
-    function updateLinkList() {
-        // Clear the current list
-        linkList.innerHTML = '';
+    function updateFileList() {
+        fileList.innerHTML = '';
 
-        // Loop through all the links and add them to the list
-        links.forEach((item, index) => {
+        files.forEach((item) => {
             const li = document.createElement('li');
             const a = document.createElement('a');
-            a.href = item.link;
-            a.textContent = item.link;
+            a.href = item.file;
+            a.target = "_blank";
+            a.textContent = item.name;
             li.appendChild(a);
 
             if (item.description) {
@@ -47,8 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 li.appendChild(p);
             }
 
-            // Append the list item to the link list
-            linkList.appendChild(li);
+            fileList.appendChild(li);
         });
     }
 });
