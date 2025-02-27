@@ -3,53 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows 7 - Retro PC</title>
+    <title>c22ww</title>
     <style>
-        /* General Styles */
+        /* General styles */
         body {
             margin: 0;
             padding: 0;
             background: black;
             overflow: hidden;
-            font-family: Arial, sans-serif;
+            font-family: monospace;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             position: relative;
-        }
-
-        /* Start Screen */
-        .start-screen {
-            width: 100%;
-            height: 100%;
-            background-color: #0088cc;
             color: white;
-            text-align: center;
-            font-size: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            position: absolute;
         }
 
-        .start-screen button {
-            font-size: 18px;
-            padding: 15px 30px;
-            background-color: #ffcc00;
-            color: black;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .start-screen button:hover {
-            background-color: #ffaa00;
-        }
-
-        /* Blinking Stars Background */
+        /* Blinking stars background */
         .stars {
             position: absolute;
             width: 100%;
@@ -72,208 +43,89 @@
             100% { opacity: 1; }
         }
 
-        /* Realistic Old PC Monitor Frame */
-        .monitor {
-            width: 900px;
-            height: 600px;
-            background: #333;
-            border: 20px solid #555;
-            border-radius: 15px;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            background-color: #111;
-        }
-
-        .screen {
-            width: 95%;
-            height: 90%;
-            background: #1a1a1a;
-            border: 10px solid #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Windows 7 Window */
-        .window {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #ccc;
-            border-radius: 6px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 600px;
-            text-align: center;
-            padding: 20px;
-            position: relative;
-        }
-
-        .window-header {
-            background: linear-gradient(to right, #0078d7, #0053a0);
+        /* Centered text (c22ww) */
+        .text {
+            font-size: 80px;
             color: white;
-            padding: 5px 10px;
             font-weight: bold;
-            text-align: left;
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .close-btn {
-            background: red;
-            color: white;
-            width: 20px;
-            height: 20px;
             text-align: center;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 16px;
-            line-height: 20px;
+            animation: shimmer 3s infinite;
         }
 
-        /* YouTube Embed */
-        iframe {
-            width: 100%;
-            height: 315px;
-            border: none;
-            border-radius: 6px;
+        /* Shimmering text effect */
+        @keyframes shimmer {
+            0% { color: #fff; text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000; }
+            50% { color: #fff; text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff; }
+            100% { color: #fff; text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff; }
         }
 
-        /* Redirect Buttons */
-        .buttons {
+        /* ASCII art container */
+        .ascii-art {
+            font-size: 18px;
+            color: #00ff00;
+            white-space: pre;
+            text-align: center;
+            line-height: 1.5;
             margin-top: 20px;
         }
 
-        .button {
-            background: #0078d7;
-            color: white;
-            padding: 10px 20px;
-            margin: 5px;
-            text-decoration: none;
-            display: inline-block;
-            border-radius: 4px;
-            transition: 0.3s;
-        }
-
-        .button:hover {
-            background: #0053a0;
-        }
-
-        /* Windows 7 Taskbar */
-        .taskbar {
+        /* Hidden YouTube iframe */
+        .youtube-audio {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 50px;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-        }
-
-        .start-button {
-            background: url('https://upload.wikimedia.org/wikipedia/commons/a/a3/Windows_7_start_button.png') no-repeat center;
-            background-size: contain;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-        }
-
-        .task-icons {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-        }
-
-        .task-icons img {
-            width: 30px;
-            height: 30px;
-            margin: 0 10px;
+            top: -9999px;
+            left: -9999px;
+            width: 0;
+            height: 0;
         }
     </style>
 </head>
 <body>
 
-    <!-- Start Screen -->
-    <div class="start-screen">
-        <button onclick="startWindows()">Click to Start</button>
+    <!-- Background stars -->
+    <div class="stars">
+        <!-- Generate random stars -->
+        <div class="star" style="top: 10%; left: 20%;"></div>
+        <div class="star" style="top: 50%; left: 50%;"></div>
+        <div class="star" style="top: 70%; left: 80%;"></div>
+        <!-- Add more stars if needed -->
     </div>
 
-    <!-- Blinking Stars Background -->
-    <div class="stars"></div>
-
-    <!-- Old PC Monitor Frame -->
-    <div class="monitor" style="display:none;" id="monitor">
-        <div class="screen">
-            <!-- Windows 7 Window -->
-            <div class="window">
-                <div class="window-header">
-                    <span>Welcome to Windows 7</span>
-                    <div class="close-btn" onclick="closeWindow()">×</div>
-                </div>
-                <div class="content">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" allowfullscreen></iframe>
-                    <div class="buttons">
-                        <a href="https://google.com" class="button">Google</a>
-                        <a href="https://discord.com" class="button">Discord</a>
-                        <a href="https://youtube.com" class="button">YouTube</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Windows 7 Taskbar -->
-            <div class="taskbar">
-                <div class="start-button"></div>
-                <div class="task-icons">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Windows_7_Taskbar_Icon.png" alt="Windows Explorer">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Windows_Media_Player_logo.png" alt="Media Player">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Internet_Explorer_7_Icon.png" alt="Internet Explorer">
-                </div>
-            </div>
-        </div>
+    <!-- Centered Text "c22ww" with shimmering effect -->
+    <div class="text">
+        c22ww
     </div>
+
+    <!-- ASCII art -->
+    <div class="ascii-art">
+        +--^----------,--------,-----,--------^-,
+        | |||||||||   `--------'     |          O
+        `+---------------------------^----------|
+          `\_,---------,---------,--------------'
+            / XXXXXX /'|       /'
+           / XXXXXX /  `\    /'
+          / XXXXXX /`-------'
+         / XXXXXX /
+        / XXXXXX /
+       (________(
+        `------'
+    </div>
+
+    <!-- YouTube iframe (audio only) -->
+    <iframe class="youtube-audio" 
+            src="https://www.youtube.com/embed/3PWe854Y5-o?autoplay=1&mute=1&loop=1&playlist=YOUR_VIDEO_ID" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media" 
+            allowfullscreen></iframe>
 
     <script>
-        function closeWindow() {
-            document.querySelector('.window').style.display = 'none';
-        }
-
-        // Generate stars dynamically
-        function generateStars() {
-            const starContainer = document.querySelector('.stars');
-            for (let i = 0; i < 100; i++) {
-                let star = document.createElement('div');
-                star.classList.add('star');
-                star.style.top = Math.random() * 100 + "vh";
-                star.style.left = Math.random() * 100 + "vw";
-                star.style.animationDuration = (Math.random() * 2 + 1) + "s";
-                starContainer.appendChild(star);
-            }
-        }
-        generateStars();
-
-        // Moving title effect
-        let titleText = "Windows 7 - Retro PC | ";
-        function moveTitle() {
-            titleText = titleText.substring(1) + titleText.charAt(0);
-            document.title = titleText;
-            setTimeout(moveTitle, 200);
-        }
-        moveTitle();
-
-        // Start screen and monitor display
-        function startWindows() {
-            document.querySelector('.start-screen').style.display = 'none';
-            document.querySelector('#monitor').style.display = 'block';
+        // Generate stars for background effect
+        for (let i = 0; i < 100; i++) {
+            let star = document.createElement("div");
+            star.classList.add("star");
+            star.style.top = Math.random() * 100 + "%";
+            star.style.left = Math.random() * 100 + "%";
+            document.querySelector(".stars").appendChild(star);
         }
     </script>
-
 </body>
 </html>
