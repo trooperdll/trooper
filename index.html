@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A cool hacker-inspired site with ASCII art, custom cursor, and dynamic website title.">
-    <meta name="keywords" content="hacker, ascii, particles, custom cursor, dynamic title">
-    <meta name="author" content="Your Name">
-    <title id="dynamic-title">#c22ww</title>
+    <meta name="description" content="i watch porn.">
+    <meta name="keywords" content="im a skid lol">
+    <meta name="author" content="c22ww">
+    <title id="dynamic-title">#</title>
 
     <style>
         * {
@@ -111,7 +111,7 @@
     <!-- Audio -->
     <div class="audio-container">
         <audio id="background-audio" autoplay loop>
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+            <source src="https://github.com/trooperdll/trooper/blob/main/track1.mp3" type="audio/mp3">
             Your browser does not support the audio element.
         </audio>
     </div>
@@ -138,12 +138,18 @@
 
     <script>
         // Dynamic title change with # prefix
-        let title = document.getElementById('dynamic-title');
-        let counter = 0;
-        setInterval(function() {
-            title.innerText = `#c22ww ${counter++}`;
-            if (counter > 99) counter = 0;
-        }, 1000); // Change every second
+        const title = document.getElementById('dynamic-title');
+        const text = "#c22ww";
+        let currentIndex = 0;
+
+        function updateTitle() {
+            title.innerText = text.substring(0, currentIndex + 1);
+            currentIndex++;
+            if (currentIndex >= text.length) {
+                currentIndex = 0; // Reset to start
+            }
+        }
+        setInterval(updateTitle, 1000); // Change every second
 
         // Particle effect (blinking stars)
         function createParticle(event) {
