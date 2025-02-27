@@ -1,143 +1,54 @@
+// Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    const AudioPlayer = document.getElementById('music-player');
-    const Volume = 0.25;
-    const tracks = ['track.mp3', 'track1.mp3']; // Array of track options
+    const form = document.getElementById('linkForm');
+    const linkInput = document.getElementById('linkInput');
+    const descriptionInput = document.getElementById('descriptionInput');
+    const linkList = document.getElementById('links');
 
-    if (AudioPlayer) {
-        AudioPlayer.volume = Volume;
-        // Choose a random track from the array
-        const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
-        AudioPlayer.src = randomTrack;
-        AudioPlayer.play()
-            .then(() => console.log('Playing track:', AudioPlayer.src))
-            .catch(err => {
-                console.warn('Audio playback issue:', err);
-            });
-    }
+    // Array to hold the links and their descriptions
+    let links = [];
 
-    // Title Animation
-    const titles = ['#', '#d', '#de', '#dea', '#dead', '#deads', '#deadsh', '#deadsho', '#deadshot', '#deadshot', '#deadsho', '#deadsh', '#deads', '#dead', '#dea', '#de', '#d', '#'];
-    let index = 0;
+    // Handle form submission
+    form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent the form from reloading the page
 
-    function changeTitle() {
-        document.title = titles[index];
-        index = (index + 1) % titles.length;
-        setTimeout(changeTitle, 200);
-    }
-    changeTitle();
+        const link = linkInput.value;
+        const description = descriptionInput.value;
 
-    // Custom Cursor
-    const customCursor = document.getElementById('custom-cursor');
-    document.addEventListener('mousemove', (e) => {
-        customCursor.style.left = `${e.clientX}px`;
-        customCursor.style.top = `${e.clientY}px`;
+        if (link) {
+            // Add the new link to the array
+            links.push({ link, description });
+
+            // Clear the input fields
+            linkInput.value = '';
+            descriptionInput.value = '';
+
+            // Update the link list
+            updateLinkList();
+        }
     });
 
-    // Particle Effect
-    const canvas = document.getElementById('particle-canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Function to update the link list on the page
+    function updateLinkList() {
+        // Clear the current list
+        linkList.innerHTML = '';
 
-    class Particle {
-        constructor(x, y, size, color) {
-            this.x = x;
-            this.y = y;
-            this.size = size;
-            this.color = color;
-            this.velocity = {
-                x: (Math.random() - 0.5) * 0.5,
-                y: (Math.random() - 0.5) * 0.5
-            };
-        }
+        // Loop through all the links and add them to the list
+        links.forEach((item, index) => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = item.link;
+            a.textContent = item.link;
+            li.appendChild(a);
 
-        update() {
-            this.x += this.velocity.x;
-            this.y += this.velocity.y;
-            if (this.x < 0 || this.x > canvas.width) this.velocity.x = -this.velocity.x;
-            if (this.y < 0 || this.y > canvas.height) this.velocity.y = -this.velocity.y;
-        }
-
-        draw() {
-            ctx.fillStyle = this.color;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    const particles = [];
-    for (let i = 0; i < 100; i++) {
-        const size = Math.random() * 3 + 1;
-        const color = 'rgba(255, 0, 0, 0.5)';
-        particles.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height, size, color));
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(particle => {
-            particle.update();
-            particle.draw();
-        });
-        requestAnimationFrame(animate);
-    }
-    animate();
-
-    // Red Rain Effect
-    class Raindrop {
-        constructor(x, y, length, speed, opacity) {
-            this.x = x;
-            this.y = y;
-            this.length = length;
-            this.speed = speed;
-            this.opacity = opacity;
-        }
-
-        draw(ctx) {
-            ctx.strokeStyle = `rgba(255, 0, 0, ${this.opacity})`;
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(this.x, this.y);
-            ctx.lineTo(this.x, this.y + this.length);
-            ctx.stroke();
-        }
-
-        update(delta) {
-            this.y += this.speed * delta;
-            if (this.y > canvas.height) {
-                this.y = -this.length;
+            if (item.description) {
+                const p = document.createElement('p');
+                p.textContent = item.description;
+                li.appendChild(p);
             }
-        }
-    }
 
-    const raindrops = [];
-    for (let i = 0; i < 50; i++) {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const length = Math.random() * 20 + 10;
-        const speed = Math.random() * 200 + 100;
-        const opacity = Math.random() * 0.5 + 0.5;
-        raindrops.push(new Raindrop(x, y, length, speed, opacity));
-    }
-
-    let lastTime = 0;
-    function rain(time) {
-        const delta = time - lastTime;
-        lastTime = time;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        raindrops.forEach(raindrop => {
-            raindrop.update(delta);
-            raindrop.draw(ctx);
+            // Append the list item to the link list
+            linkList.appendChild(li);
         });
-        requestAnimationFrame(rain);
     }
-    requestAnimationFrame(rain);
-
-    // Resize Handler
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-
-    window.addEventListener('resize', resizeCanvas);
 });
