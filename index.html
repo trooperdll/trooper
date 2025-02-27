@@ -38,22 +38,24 @@
             animation: blink 2s infinite alternate;
         }
 
+        /* Create an animation for the stars to blink */
         @keyframes blink {
             0% { opacity: 0; }
             100% { opacity: 1; }
         }
 
-        /* Centered text (c22ww) */
+        /* Blinking effect for c22ww text */
         .text {
-            font-size: 60px;  /* Smaller size */
+            font-size: 45px;  /* Smaller size */
             color: white;
             font-weight: bold;
             text-align: center;
-            animation: shimmer 3s infinite;
-            margin-bottom: 20px;  /* Space between text and ASCII art */
+            position: relative;
+            animation: shimmer 2s infinite;
+            margin-bottom: 20px;
         }
 
-        /* Shimmering text effect */
+        /* Shimmer effect for c22ww text with stars inside */
         @keyframes shimmer {
             0% { color: #fff; text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000; }
             50% { color: #fff; text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff; }
@@ -62,11 +64,12 @@
 
         /* ASCII art container */
         .ascii-art {
-            font-size: 14px; /* Smaller size */
+            font-size: 12px; /* Smaller size */
             color: white;  /* White color */
             white-space: pre;
             text-align: center;
             line-height: 1.5;
+            margin-top: 10px;
         }
 
         /* Hidden YouTube iframe */
@@ -77,25 +80,28 @@
             width: 0;
             height: 0;
         }
+
     </style>
 </head>
 <body>
 
     <!-- Background stars -->
     <div class="stars">
-        <!-- Generate random stars -->
-        <div class="star" style="top: 10%; left: 20%;"></div>
-        <div class="star" style="top: 50%; left: 50%;"></div>
-        <div class="star" style="top: 70%; left: 80%;"></div>
-        <!-- Add more stars if needed -->
+        <!-- Create individual stars that blink at different positions -->
+        <div class="star" style="top: 10%; left: 20%; animation: blink 2s infinite alternate;"></div>
+        <div class="star" style="top: 50%; left: 30%; animation: blink 1.5s infinite alternate;"></div>
+        <div class="star" style="top: 70%; left: 40%; animation: blink 2.5s infinite alternate;"></div>
+        <div class="star" style="top: 20%; left: 60%; animation: blink 1.8s infinite alternate;"></div>
+        <div class="star" style="top: 80%; left: 70%; animation: blink 1.2s infinite alternate;"></div>
+        <!-- Add more stars as needed with different timings -->
     </div>
 
-    <!-- Centered Text "c22ww" with shimmering effect -->
+    <!-- Centered Text "c22ww" with shimmering effect and stars inside -->
     <div class="text">
         c22ww
     </div>
 
-    <!-- ASCII art -->
+    <!-- ASCII Art under the c22ww text -->
     <div class="ascii-art">
         +--^----------,--------,-----,--------^-,
         | |||||||||   `--------'     |          O
@@ -118,7 +124,7 @@
             allowfullscreen></iframe>
 
     <script>
-        // Generate stars for background effect
+        // Generate random stars for background effect
         for (let i = 0; i < 100; i++) {
             let star = document.createElement("div");
             star.classList.add("star");
@@ -127,5 +133,6 @@
             document.querySelector(".stars").appendChild(star);
         }
     </script>
+
 </body>
 </html>
