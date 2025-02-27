@@ -3,19 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows 7</title>
+    <title>Windows 7 - Retro PC</title>
     <style>
+        /* General Styles */
         body {
             margin: 0;
             padding: 0;
-            background: url('https://wallpaperaccess.com/full/472302.jpg') no-repeat center center fixed;
-            background-size: cover;
+            background: black;
+            overflow: hidden;
             font-family: Arial, sans-serif;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Blinking Stars Background */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            width: 2px;
+            height: 2px;
+            animation: blink 2s infinite alternate;
+        }
+
+        @keyframes blink {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Old PC Monitor Frame */
+        .monitor {
+            width: 900px;
+            height: 600px;
+            background: #222;
+            border: 20px solid #444;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screen {
+            width: 95%;
+            height: 90%;
+            background: url('https://wallpaperaccess.com/full/472302.jpg') no-repeat center;
+            background-size: cover;
+            border: 5px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
 
         /* Windows 7 Window */
@@ -55,10 +106,6 @@
             line-height: 20px;
         }
 
-        .content {
-            padding: 20px;
-        }
-
         /* YouTube Embed */
         iframe {
             width: 100%;
@@ -89,7 +136,7 @@
 
         /* Windows 7 Taskbar */
         .taskbar {
-            position: fixed;
+            position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
@@ -123,29 +170,37 @@
 </head>
 <body>
 
-    <!-- Windows 7 Window -->
-    <div class="window">
-        <div class="window-header">
-            <span>Welcome to Windows 7</span>
-            <div class="close-btn" onclick="closeWindow()">×</div>
-        </div>
-        <div class="content">
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-            <div class="buttons">
-                <a href="https://google.com" class="button">Google</a>
-                <a href="https://discord.com" class="button">Discord</a>
-                <a href="https://youtube.com" class="button">YouTube</a>
-            </div>
-        </div>
-    </div>
+    <!-- Blinking Stars Background -->
+    <div class="stars"></div>
 
-    <!-- Windows 7 Taskbar -->
-    <div class="taskbar">
-        <div class="start-button"></div>
-        <div class="task-icons">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Windows_7_Taskbar_Icon.png" alt="Windows Explorer">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Windows_Media_Player_logo.png" alt="Media Player">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Internet_Explorer_7_Icon.png" alt="Internet Explorer">
+    <!-- Old PC Monitor Frame -->
+    <div class="monitor">
+        <div class="screen">
+            <!-- Windows 7 Window -->
+            <div class="window">
+                <div class="window-header">
+                    <span>Welcome to Windows 7</span>
+                    <div class="close-btn" onclick="closeWindow()">×</div>
+                </div>
+                <div class="content">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                    <div class="buttons">
+                        <a href="https://google.com" class="button">Google</a>
+                        <a href="https://discord.com" class="button">Discord</a>
+                        <a href="https://youtube.com" class="button">YouTube</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Windows 7 Taskbar -->
+            <div class="taskbar">
+                <div class="start-button"></div>
+                <div class="task-icons">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Windows_7_Taskbar_Icon.png" alt="Windows Explorer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Windows_Media_Player_logo.png" alt="Media Player">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Internet_Explorer_7_Icon.png" alt="Internet Explorer">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -153,6 +208,20 @@
         function closeWindow() {
             document.querySelector('.window').style.display = 'none';
         }
+
+        // Generate stars dynamically
+        function generateStars() {
+            const starContainer = document.querySelector('.stars');
+            for (let i = 0; i < 100; i++) {
+                let star = document.createElement('div');
+                star.classList.add('star');
+                star.style.top = Math.random() * 100 + "vh";
+                star.style.left = Math.random() * 100 + "vw";
+                star.style.animationDuration = (Math.random() * 2 + 1) + "s";
+                starContainer.appendChild(star);
+            }
+        }
+        generateStars();
     </script>
 
 </body>
