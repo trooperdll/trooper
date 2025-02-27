@@ -45,11 +45,12 @@
 
         /* Centered text (c22ww) */
         .text {
-            font-size: 80px;
+            font-size: 60px;  /* Smaller size */
             color: white;
             font-weight: bold;
             text-align: center;
             animation: shimmer 3s infinite;
+            margin-bottom: 20px;  /* Space between text and ASCII art */
         }
 
         /* Shimmering text effect */
@@ -61,12 +62,11 @@
 
         /* ASCII art container */
         .ascii-art {
-            font-size: 18px;
-            color: #00ff00;
+            font-size: 14px; /* Smaller size */
+            color: white;  /* White color */
             white-space: pre;
             text-align: center;
             line-height: 1.5;
-            margin-top: 20px;
         }
 
         /* Hidden YouTube iframe */
@@ -112,7 +112,7 @@
 
     <!-- YouTube iframe (audio only) -->
     <iframe class="youtube-audio" 
-            src="https://www.youtube.com/embed/3PWe854Y5-o?autoplay=1&mute=1&loop=1&playlist=YOUR_VIDEO_ID" 
+            src="https://www.youtube.com/embed/3PWe854Y5-o?autoplay=1&loop=1&playlist=3PWe854Y5-o&controls=0&mute=0" 
             frameborder="0" 
             allow="autoplay; encrypted-media" 
             allowfullscreen></iframe>
