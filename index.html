@@ -22,20 +22,19 @@
             font-size: 14px;
             white-space: pre;
             font-weight: bold;
-            background-image: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            animation: rainbow 5s linear infinite;
+            animation: flashRainbow 0.3s infinite alternate;
         }
 
-        @keyframes rainbow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        @keyframes flashRainbow {
+            0% { color: red; }
+            20% { color: orange; }
+            40% { color: yellow; }
+            60% { color: green; }
+            80% { color: blue; }
+            100% { color: violet; }
         }
 
-        /* Centered Link */
+        /* Centered Link with Glitch Effect */
         #redirect-link {
             position: fixed;
             top: 50%;
@@ -48,6 +47,7 @@
             padding: 10px 20px;
             transition: 0.3s;
             opacity: 0.7;
+            position: relative;
         }
 
         #redirect-link:hover {
@@ -56,52 +56,18 @@
             opacity: 1;
         }
 
-        /* Rainbow "flank801" */
-        #flank801-text {
-            font-size: 2rem;
-            font-weight: bold;
-            background-image: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            animation: rainbow 5s linear infinite;
+        /* Glitch Effect */
+        @keyframes glitch {
+            0% { transform: translate(0, 0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(2px, 2px); }
+            100% { transform: translate(0, 0); }
         }
 
-        .snowflake {
-            position: fixed;
-            top: -10px;
-            font-size: 10px;
-            user-select: none;
-            pointer-events: none;
-            animation: snowfall linear infinite;
-            background-image: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            animation: rainbow 3s linear infinite, snowfall linear infinite;
-        }
-
-        @keyframes snowfall {
-            to {
-                transform: translateY(100vh);
-            }
-        }
-
-        /* Confetti Particles */
-        .confetti {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background-color: white;
-            border-radius: 50%;
-            opacity: 0.7;
-            pointer-events: none;
-            animation: fadeOut 1s linear forwards;
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(0); }
+        .glitch {
+            animation: glitch 0.2s linear 3;
         }
 
     </style>
@@ -114,8 +80,6 @@
     </audio>
 
     <div id="ascii-container"></div>
-
-    <div id="flank801-text">flank801</div>
     
     <a id="redirect-link" href="https://doxbin.org/user/Cxxz">lol</a>
 
@@ -135,41 +99,14 @@
 
         document.getElementById("ascii-container").innerText = asciiText;
 
-        // Snowfall Effect
-        function createSnowflake() {
-            const snowflake = document.createElement("div");
-            snowflake.innerHTML = "*";
-            snowflake.classList.add("snowflake");
-            document.body.appendChild(snowflake);
-
-            // Random position and speed
-            snowflake.style.left = Math.random() * window.innerWidth + "px";
-            snowflake.style.animationDuration = (Math.random() * 3 + 2) + "s";
-            snowflake.style.opacity = Math.random();
-
+        // Glitch Effect on Click
+        document.getElementById("redirect-link").addEventListener("click", (event) => {
+            event.preventDefault();
+            const link = event.target;
+            link.classList.add("glitch");
             setTimeout(() => {
-                snowflake.remove();
-            }, 5000);
-        }
-
-        setInterval(createSnowflake, 200);
-
-        // Confetti Mouse Trail
-        document.addEventListener("mousemove", (e) => {
-            for (let i = 0; i < 5; i++) { // Creates multiple confetti per movement
-                const confetti = document.createElement("div");
-                confetti.classList.add("confetti");
-                document.body.appendChild(confetti);
-
-                const size = Math.random() * 6 + 4;
-                confetti.style.width = `${size}px`;
-                confetti.style.height = `${size}px`;
-                confetti.style.left = `${e.pageX + (Math.random() * 20 - 10)}px`;
-                confetti.style.top = `${e.pageY + (Math.random() * 20 - 10)}px`;
-                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`; // Random color
-
-                setTimeout(() => confetti.remove(), 1000);
-            }
+                window.location.href = link.href;
+            }, 600);
         });
 
         // Play Background Music on User Interaction
