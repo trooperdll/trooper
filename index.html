@@ -22,12 +22,17 @@
             font-size: 14px;
             white-space: pre;
             font-weight: bold;
-            animation: blink 1s infinite alternate;
+            background-image: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: rainbow 5s linear infinite;
         }
 
-        @keyframes blink {
-            0% { opacity: 1; }
-            100% { opacity: 0.3; }
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Centered Link */
@@ -42,22 +47,38 @@
             border: 1px solid white;
             padding: 10px 20px;
             transition: 0.3s;
+            opacity: 0.7;
         }
 
         #redirect-link:hover {
             background: white;
             color: black;
+            opacity: 1;
         }
 
-        
+        /* Rainbow "flank801" */
+        #flank801-text {
+            font-size: 2rem;
+            font-weight: bold;
+            background-image: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: rainbow 5s linear infinite;
+        }
+
         .snowflake {
             position: fixed;
             top: -10px;
-            color: white;
             font-size: 10px;
             user-select: none;
             pointer-events: none;
             animation: snowfall linear infinite;
+            background-image: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: rainbow 3s linear infinite, snowfall linear infinite;
         }
 
         @keyframes snowfall {
@@ -69,16 +90,14 @@
 </head>
 <body>
 
-    
     <div id="ascii-container"></div>
 
-    flank801
+    <div id="flank801-text">flank801</div>
+    
     <a id="redirect-link" href="https://doxbin.org/user/Cxxz">lol</a>
 
     <script>
-        
         const asciiText = `
-                                                  
 @@@@@@@@  @@@        @@@@@@   @@@  @@@  @@@  @@@  
 @@@@@@@@  @@@       @@@@@@@@  @@@@ @@@  @@@  @@@  
 @@!       @@!       @@!  @@@  @@!@!@@@  @@!  !@@  
@@ -89,7 +108,6 @@
 :!:        :!:      :!:  !:!  :!:  !:!  :!:  !:!  
  ::        :: ::::  ::   :::   ::   ::   ::  :::  
  :        : :: : :   :   : :  ::    :    :   :::  
-                                                  
         `;
 
         document.getElementById("ascii-container").innerText = asciiText;
@@ -108,10 +126,10 @@
 
             setTimeout(() => {
                 snowflake.remove();
-            }, 5000); // Remove after falling
+            }, 5000);
         }
 
-        setInterval(createSnowflake, 200); // Add snowflakes every 0.2s
+        setInterval(createSnowflake, 200);
 
     </script>
 </body>
