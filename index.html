@@ -14,7 +14,7 @@
             cursor: crosshair;
         }
 
-        /* ASCII Art Container */
+        /* ASCII Art Container with 3D Effect */
         #ascii-container {
             position: fixed;
             top: 5%;
@@ -23,6 +23,14 @@
             font-size: 14px;
             white-space: pre;
             font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.3), -2px -2px 5px rgba(255, 255, 255, 0.3);
+            animation: ascii-glitch 1.5s infinite alternate;
+        }
+
+        @keyframes ascii-glitch {
+            0% { transform: translateX(-50%) skewX(0deg); }
+            50% { transform: translateX(-50%) skewX(5deg); }
+            100% { transform: translateX(-50%) skewX(-5deg); }
         }
 
         /* Centered Link with Glitch Effect */
@@ -63,7 +71,19 @@
     </style>
 </head>
 <body>
-    <div id="ascii-container"></div>
+    <div id="ascii-container">
+        @@@@@@@@  @@@        @@@@@@   @@@  @@@  @@@  @@@  
+        @@@@@@@@  @@@       @@@@@@@@  @@@@ @@@  @@@  @@@  
+        @@!       @@!       @@!  @@@  @@!@!@@@  @@!  !@@  
+        !@!       !@!       !@!  @!@  !@!!@!@!  !@!  @!!  
+        @!!!:!    @!!       @!@!@!@!  @!@ !!@!  @!@@!@!   
+        !!!!!:    !!!       !!!@!!!!  !@!  !!!  !!@!!!    
+        !!:       !!:       !!:  !!!  !!:  !!!  !!: :!!   
+        :!:        :!:      :!:  !:!  :!:  !:!  :!:  !:!  
+         ::        :: ::::  ::   :::   ::   ::   ::  :::  
+         :        : :: : :   :   : :  ::    :    :   :::  
+    </div>
+    
     <a id="redirect-link" href="https://doxbin.org/user/Cxxz">lol</a>
 
     <script src="script.js"></script>
