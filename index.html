@@ -3,200 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>flank he a skid </title>
+    <title>flank is just a skid</title>
     <style>
         body {
             background-color: black;
             color: white;
             font-family: 'Courier New', monospace;
             text-align: center;
-            padding: 20px;
             overflow: hidden;
         }
 
-        /* ASCII Stars */
-        #star-container {
+        /* ASCII Star Background */
+        #ascii-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-size: 12px;
-            color: white;
             white-space: pre;
-            opacity: 0.6;
-            pointer-events: none;
-            animation: blink-stars 1s infinite alternate;
-        }
-
-        @keyframes blink-stars {
-            from { opacity: 0.6; }
-            to { opacity: 1; }
-        }
-
-        /* Login Screen */
-        #login-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        #login-title {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        #password-input {
-            background: black;
-            color: white;
-            border: 1px solid green;
-            font-family: 'Courier New', monospace;
-            padding: 10px;
-            font-size: 1.2rem;
-            text-align: center;
-            outline: none;
-        }
-
-        /* Terminal */
-        .hidden {
-            display: none !important;
-        }
-
-        #username {
-            font-size: 2rem;
             font-weight: bold;
-            margin-top: 20vh;
-            position: relative;
         }
 
-        .terminal {
-            width: 80%;
-            max-width: 800px;
-            margin: auto;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border: 2px solid green;
-            text-align: left;
-            height: 400px;
-            overflow-y: auto;
-            font-size: 1.1rem;
-        }
-
-        input {
-            background: black;
+        /* Centered Link */
+        #redirect-link {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
             color: white;
-            border: none;
-            font-family: inherit;
-            width: 100%;
-            padding: 5px;
-            font-size: 1rem;
-            outline: none;
+            text-decoration: none;
+            border: 1px solid white;
+            padding: 10px 20px;
+            transition: 0.3s;
         }
 
-        /* Command text */
-        .command-output {
-            color: #0f0;
-            font-family: 'Courier New', monospace;
+        #redirect-link:hover {
+            background: white;
+            color: black;
+        }
+
+        /* Snow Effect */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 10px;
+            user-select: none;
+            pointer-events: none;
+            animation: snowfall linear infinite;
+        }
+
+        @keyframes snowfall {
+            to {
+                transform: translateY(100vh);
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- ASCII Stars -->
-    <div id="star-container"></div>
+    <!-- ASCII Art Background -->
+    <div id="ascii-container"></div>
 
-    <!-- Login Screen -->
-    <div id="login-screen">
-        <div id="login-title">Enter Password to Access hacking (for skids) </div>
-        <input type="password" id="password-input" placeholder="Enter password..." autofocus>
-    </div>
-
-    <!-- Hacker Terminal (Hidden Until Login) -->
-    <div id="terminal-container" class="hidden">
-        <div id="username">flank801</div>
-        <div class="terminal" id="terminal">
-            <p>> Welcome to the interactive hacker terminal.</p>
-            <p>> Type 'help' to see available commands.</p>
-        </div>
-        <input type="text" id="commandInput" placeholder="Type a command...">
-    </div>
+    <!-- Centered Redirect Link -->
+    <a id="redirect-link" href="https://example.com">Enter</a>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const terminal = document.getElementById("terminal");
-            const input = document.getElementById("commandInput");
-            const passwordInput = document.getElementById("password-input");
-            const loginScreen = document.getElementById("login-screen");
-            const terminalContainer = document.getElementById("terminal-container");
-            const starContainer = document.getElementById("star-container");
-
-            // ASCII Star Generator
-            function generateStars() {
-                let stars = "";
-                for (let i = 0; i < 500; i++) {
-                    stars += Math.random() > 0.7 ? "*" : " ";
-                    if (i % 100 === 0) stars += "\n"; // New lines for formatting
-                }
-                return stars;
+        // Generate ASCII Star Field
+        function generateStars() {
+            let stars = "";
+            for (let i = 0; i < 600; i++) { // More dense stars
+                stars += Math.random() > 0.7 ? "*" : " ";
+                if (i % 100 === 0) stars += "\n"; // Formatting
             }
+            return stars;
+        }
 
-            starContainer.innerText = generateStars();
-            setInterval(() => {
-                starContainer.innerText = generateStars();
-            }, 1000); // Refresh stars every second
+        document.getElementById("ascii-container").innerText = generateStars();
+        setInterval(() => {
+            document.getElementById("ascii-container").innerText = generateStars();
+        }, 1000); // Update every second
 
-            // Fake Password System
-            passwordInput.addEventListener("keypress", function(event) {
-                if (event.key === "Enter") {
-                    if (passwordInput.value === "admin") { // Change password if needed
-                        loginScreen.classList.add("hidden"); // Hide login
-                        terminalContainer.classList.remove("hidden"); // Show terminal
-                        input.focus();
-                    } else {
-                        alert("Access Denied!");
-                        passwordInput.value = "";
-                    }
-                }
-            });
+        // Snowfall Effect
+        function createSnowflake() {
+            const snowflake = document.createElement("div");
+            snowflake.innerHTML = "*";
+            snowflake.classList.add("snowflake");
+            document.body.appendChild(snowflake);
 
-            input.addEventListener("keypress", function(event) {
-                if (event.key === "Enter") {
-                    const command = input.value.trim();
-                    if (command) {
-                        terminal.innerHTML += `<p class="command-output">> ${command}</p>`;
-                        executeCommand(command);
-                        terminal.scrollTop = terminal.scrollHeight;
-                    }
-                    input.value = "";
-                }
-            });
+            // Random position and speed
+            snowflake.style.left = Math.random() * window.innerWidth + "px";
+            snowflake.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            snowflake.style.opacity = Math.random();
 
-            function executeCommand(command) {
-                let response = "Unknown command.";
-                if (command === "help") {
-                    response = "<br>Available commands:<br>- help: Show this list<br>- hack: Start a fake hack<br>- clear: Clear the terminal<br>- secret: Reveal a hidden message<br>- about: Info about this site<br>- ipconfig: Show a IP";
-                } else if (command === "hack") {
-                    response = "Hacking in progress...<br>Accessing databases...<br>Bypassing firewall...<br>Hack complete! (you skid.)";
-                } else if (command === "clear") {
-                    terminal.innerHTML = "<p>> Terminal cleared.</p>";
-                    return;
-                } else if (command === "secret") {
-                    response = "You've unlocked a hidden message: Stay curious, stay anonymous!";
-                } else if (command === "about") {
-                    response = "This is a simulated hacker terminal made for you larps, and skids..";
-                } else if (command === "ipconfig") {
-                    response = "IPv4 Address: 192.168.1.101<br>Subnet Mask: 255.255.255.0<br>Default Gateway: 192.168.1.1<br> also lol get breached skid.";
-                }
-                terminal.innerHTML += `<p class="command-output">${response}</p>`;
-            }
-        });
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000); // Remove after falling
+        }
+
+        setInterval(createSnowflake, 500); // Add snowflakes every 0.5s
     </script>
 
 </body>
