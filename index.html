@@ -11,9 +11,10 @@
             font-family: 'Courier New', monospace;
             text-align: center;
             overflow: hidden;
+            cursor: crosshair;
         }
 
-        /* ASCII "flank801" at the Top */
+        /* ASCII Art Container */
         #ascii-container {
             position: fixed;
             top: 5%;
@@ -22,16 +23,6 @@
             font-size: 14px;
             white-space: pre;
             font-weight: bold;
-            animation: flashRainbow 0.3s infinite alternate;
-        }
-
-        @keyframes flashRainbow {
-            0% { color: red; }
-            20% { color: orange; }
-            40% { color: yellow; }
-            60% { color: green; }
-            80% { color: blue; }
-            100% { color: violet; }
         }
 
         /* Centered Link with Glitch Effect */
@@ -69,52 +60,12 @@
         .glitch {
             animation: glitch 0.2s linear 3;
         }
-
     </style>
 </head>
 <body>
-
-    <!-- Hidden Background Music -->
-    <audio id="hacker-music" loop>
-        <source src="hacker-sound.mp3" type="audio/mpeg">
-    </audio>
-
     <div id="ascii-container"></div>
-    
     <a id="redirect-link" href="https://doxbin.org/user/Cxxz">lol</a>
 
-    <script>
-        const asciiText = `
-@@@@@@@@  @@@        @@@@@@   @@@  @@@  @@@  @@@  
-@@@@@@@@  @@@       @@@@@@@@  @@@@ @@@  @@@  @@@  
-@@!       @@!       @@!  @@@  @@!@!@@@  @@!  !@@  
-!@!       !@!       !@!  @!@  !@!!@!@!  !@!  @!!  
-@!!!:!    @!!       @!@!@!@!  @!@ !!@!  @!@@!@!   
-!!!!!:    !!!       !!!@!!!!  !@!  !!!  !!@!!!    
-!!:       !!:       !!:  !!!  !!:  !!!  !!: :!!   
-:!:        :!:      :!:  !:!  :!:  !:!  :!:  !:!  
- ::        :: ::::  ::   :::   ::   ::   ::  :::  
- :        : :: : :   :   : :  ::    :    :   :::  
-        `;
-
-        document.getElementById("ascii-container").innerText = asciiText;
-
-        // Glitch Effect on Click
-        document.getElementById("redirect-link").addEventListener("click", (event) => {
-            event.preventDefault();
-            const link = event.target;
-            link.classList.add("glitch");
-            setTimeout(() => {
-                window.location.href = link.href;
-            }, 600);
-        });
-
-        // Play Background Music on User Interaction
-        document.addEventListener("click", () => {
-            const music = document.getElementById("hacker-music");
-            music.volume = 0.3; // Low volume
-            music.play();
-        }, { once: true }); // Only trigger once
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
