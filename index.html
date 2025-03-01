@@ -86,9 +86,32 @@
                 transform: translateY(100vh);
             }
         }
+
+        /* Confetti Particles */
+        .confetti {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.7;
+            pointer-events: none;
+            animation: fadeOut 1s linear forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0); }
+        }
+
     </style>
 </head>
 <body>
+
+    <!-- Hidden Background Music -->
+    <audio id="hacker-music" loop>
+        <source src="hacker-sound.mp3" type="audio/mpeg">
+    </audio>
 
     <div id="ascii-container"></div>
 
@@ -131,6 +154,30 @@
 
         setInterval(createSnowflake, 200);
 
+        // Confetti Mouse Trail
+        document.addEventListener("mousemove", (e) => {
+            for (let i = 0; i < 5; i++) { // Creates multiple confetti per movement
+                const confetti = document.createElement("div");
+                confetti.classList.add("confetti");
+                document.body.appendChild(confetti);
+
+                const size = Math.random() * 6 + 4;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.left = `${e.pageX + (Math.random() * 20 - 10)}px`;
+                confetti.style.top = `${e.pageY + (Math.random() * 20 - 10)}px`;
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`; // Random color
+
+                setTimeout(() => confetti.remove(), 1000);
+            }
+        });
+
+        // Play Background Music on User Interaction
+        document.addEventListener("click", () => {
+            const music = document.getElementById("hacker-music");
+            music.volume = 0.3; // Low volume
+            music.play();
+        }, { once: true }); // Only trigger once
     </script>
 </body>
 </html>
