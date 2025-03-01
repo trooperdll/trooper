@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>flank</title>
+    <title>Hacker Terminal</title>
     <style>
         body {
             background-color: black;
@@ -14,13 +14,66 @@
             overflow: hidden;
         }
 
+        /* ASCII Stars */
+        #star-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-size: 12px;
+            color: white;
+            white-space: pre;
+            opacity: 0.6;
+            pointer-events: none;
+            animation: blink-stars 1s infinite alternate;
+        }
+
+        @keyframes blink-stars {
+            from { opacity: 0.6; }
+            to { opacity: 1; }
+        }
+
+        /* Login Screen */
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        #login-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        #password-input {
+            background: black;
+            color: white;
+            border: 1px solid green;
+            font-family: 'Courier New', monospace;
+            padding: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            outline: none;
+        }
+
+        /* Terminal */
+        .hidden {
+            display: none;
+        }
+
         #username {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: bold;
             margin-top: 20vh;
             position: relative;
-            display: inline-block;
-            animation: blink 1s infinite alternate, glitch 1s infinite linear alternate;
         }
 
         .terminal {
@@ -47,35 +100,7 @@
             outline: none;
         }
 
-        /* Blinking effect */
-        @keyframes blink {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
-
-        /* Glitch effect */
-        @keyframes glitch {
-            0% { text-shadow: 2px 2px red, -2px -2px blue; }
-            20% { text-shadow: -2px -2px red, 2px 2px blue; }
-            40% { text-shadow: 3px 3px red, -3px -3px blue; }
-            60% { text-shadow: -3px -3px red, 3px 3px blue; }
-            80% { text-shadow: 4px 4px red, -4px -4px blue; }
-            100% { text-shadow: -4px -4px red, 4px 4px blue; }
-        }
-
-        /* Screen Flicker Effect */
-        #glitch-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: black;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* Command text effect */
+        /* Command text */
         .command-output {
             color: #0f0;
             font-family: 'Courier New', monospace;
@@ -83,23 +108,63 @@
     </style>
 </head>
 <body>
-    <div id="glitch-overlay"></div>
-    <div id="username">flank801</div>
 
-    <div class="terminal" id="terminal">
-        <p>> Welcome to the interactive hacker terminal.</p>
-        <p>> Type 'help' to see available commands.</p>
+    <!-- ASCII Stars -->
+    <div id="star-container"></div>
+
+    <!-- Login Screen -->
+    <div id="login-screen">
+        <div id="login-title">Enter Password to Access Terminal</div>
+        <input type="password" id="password-input" placeholder="Enter password..." autofocus>
     </div>
 
-    <input type="text" id="commandInput" placeholder="Type a command...">
+    <!-- Hacker Terminal (Hidden Until Login) -->
+    <div id="terminal-container" class="hidden">
+        <div id="username">flank801</div>
+        <div class="terminal" id="terminal">
+            <p>> Welcome to the interactive hacker terminal.</p>
+            <p>> Type 'help' to see available commands.</p>
+        </div>
+        <input type="text" id="commandInput" placeholder="Type a command...">
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const terminal = document.getElementById("terminal");
             const input = document.getElementById("commandInput");
-            const glitchOverlay = document.getElementById("glitch-overlay");
+            const passwordInput = document.getElementById("password-input");
+            const loginScreen = document.getElementById("login-screen");
+            const terminalContainer = document.getElementById("terminal-container");
+            const starContainer = document.getElementById("star-container");
 
-            input.focus();
+            // ASCII Star Generator
+            function generateStars() {
+                let stars = "";
+                for (let i = 0; i < 100; i++) {
+                    stars += Math.random() > 0.7 ? "*" : " ";
+                    if (i % 50 === 0) stars += "\n"; // New lines for formatting
+                }
+                return stars;
+            }
+
+            starContainer.innerText = generateStars();
+            setInterval(() => {
+                starContainer.innerText = generateStars();
+            }, 1000); // Refresh stars every second
+
+            // Fake Password System
+            passwordInput.addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    if (passwordInput.value === "admin") { // Change to a real password if needed
+                        loginScreen.classList.add("hidden");
+                        terminalContainer.classList.remove("hidden");
+                        input.focus();
+                    } else {
+                        alert("Access Denied!");
+                        passwordInput.value = "";
+                    }
+                }
+            });
 
             input.addEventListener("keypress", function(event) {
                 if (event.key === "Enter") {
@@ -118,7 +183,7 @@
                 if (command === "help") {
                     response = "<br>Available commands:<br>- help: Show this list<br>- hack: Start a fake hack<br>- clear: Clear the terminal<br>- secret: Reveal a hidden message<br>- about: Info about this site<br>- ipconfig: Show a fake IP";
                 } else if (command === "hack") {
-                    response = "Hacking into the mainframe...<br>Accessing databases...<br>Bypassing firewall...<br>Hack complete! (Just kidding)";
+                    response = "Hacking in progress...<br>Accessing databases...<br>Bypassing firewall...<br>Hack complete! (Just kidding)";
                 } else if (command === "clear") {
                     terminal.innerHTML = "<p>> Terminal cleared.</p>";
                     return;
@@ -131,20 +196,8 @@
                 }
                 terminal.innerHTML += `<p class="command-output">${response}</p>`;
             }
-
-            function flickerScreen() {
-                glitchOverlay.style.opacity = "1";
-                setTimeout(() => {
-                    glitchOverlay.style.opacity = "0";
-                }, Math.random() * 200 + 50); // Random flicker duration
-            }
-
-            setInterval(() => {
-                if (Math.random() > 0.8) { // 20% chance every second
-                    flickerScreen();
-                }
-            }, 1000);
         });
     </script>
+
 </body>
 </html>
