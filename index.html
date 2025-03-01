@@ -14,7 +14,7 @@
             cursor: crosshair;
         }
 
-        /* ASCII Art Container with Smooth Movement */
+        /* ASCII Art Container with Smooth Movement and Glitch Effect */
         #ascii-container {
             position: fixed;
             top: 5%;
@@ -24,13 +24,19 @@
             white-space: pre;
             font-weight: bold;
             text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.3), -2px -2px 5px rgba(255, 255, 255, 0.3);
-            animation: ascii-move 2s infinite alternate ease-in-out;
+            animation: ascii-move 2s infinite alternate ease-in-out, glitch 0.5s infinite;
         }
 
         @keyframes ascii-move {
             0% { transform: translateX(-50%) translateY(0); }
             50% { transform: translateX(-50%) translateY(3px); }
             100% { transform: translateX(-50%) translateY(0); }
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.6); }
+            50% { text-shadow: -2px -2px 5px rgba(0, 255, 0, 0.6); }
+            100% { text-shadow: 2px -2px 5px rgba(0, 0, 255, 0.6); }
         }
 
         /* Centered Link */
@@ -100,15 +106,15 @@
 
             // Random position and speed
             snowflake.style.left = Math.random() * window.innerWidth + "px";
-            snowflake.style.animationDuration = (Math.random() * 3 + 1) + "s";
+            snowflake.style.animationDuration = (Math.random() * 2 + 1) + "s";
             snowflake.style.opacity = Math.random();
 
             setTimeout(() => {
                 snowflake.remove();
-            }, 5000); // Remove after falling
+            }, 3000); // Remove after falling
         }
 
-        setInterval(createSnowflake, 100); // Blizzard effect
+        setInterval(createSnowflake, 50); // Blizzard effect with heavy snowfall
     </script>
 </body>
 </html>
