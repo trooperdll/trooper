@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lol</title>
+    <title>flank he a skid </title>
     <style>
         body {
             background-color: black;
@@ -66,7 +66,7 @@
 
         /* Terminal */
         .hidden {
-            display: none;
+            display: none !important;
         }
 
         #username {
@@ -114,7 +114,7 @@
 
     <!-- Login Screen -->
     <div id="login-screen">
-        <div id="login-title">Enter Password to Access Terminal</div>
+        <div id="login-title">Enter Password to Access hacking (for skids) </div>
         <input type="password" id="password-input" placeholder="Enter password..." autofocus>
     </div>
 
@@ -140,9 +140,9 @@
             // ASCII Star Generator
             function generateStars() {
                 let stars = "";
-                for (let i = 0; i < 100; i++) {
+                for (let i = 0; i < 500; i++) {
                     stars += Math.random() > 0.7 ? "*" : " ";
-                    if (i % 50 === 0) stars += "\n"; // New lines for formatting
+                    if (i % 100 === 0) stars += "\n"; // New lines for formatting
                 }
                 return stars;
             }
@@ -155,9 +155,9 @@
             // Fake Password System
             passwordInput.addEventListener("keypress", function(event) {
                 if (event.key === "Enter") {
-                    if (passwordInput.value === "admin") { // Change to a real password if needed
-                        loginScreen.classList.add("hidden");
-                        terminalContainer.classList.remove("hidden");
+                    if (passwordInput.value === "admin") { // Change password if needed
+                        loginScreen.classList.add("hidden"); // Hide login
+                        terminalContainer.classList.remove("hidden"); // Show terminal
                         input.focus();
                     } else {
                         alert("Access Denied!");
@@ -181,16 +181,16 @@
             function executeCommand(command) {
                 let response = "Unknown command.";
                 if (command === "help") {
-                    response = "<br>Available commands:<br>- help: Show this list<br>- hack: Start a fake hack<br>- clear: Clear the terminal<br>- secret: Reveal a hidden message<br>- about: Info about this site<br>- ipconfig: Show a fake IP";
+                    response = "<br>Available commands:<br>- help: Show this list<br>- hack: Start a fake hack<br>- clear: Clear the terminal<br>- secret: Reveal a hidden message<br>- about: Info about this site<br>- ipconfig: Show a IP";
                 } else if (command === "hack") {
-                    response = "Hacking in progress...<br>Accessing databases...<br>Bypassing firewall...<br>Hack complete! (Just kidding)";
+                    response = "Hacking in progress...<br>Accessing databases...<br>Bypassing firewall...<br>Hack complete! (you skid.)";
                 } else if (command === "clear") {
                     terminal.innerHTML = "<p>> Terminal cleared.</p>";
                     return;
                 } else if (command === "secret") {
                     response = "You've unlocked a hidden message: Stay curious, stay anonymous!";
                 } else if (command === "about") {
-                    response = "This is a simulated hacker terminal made for fun.";
+                    response = "This is a simulated hacker terminal made for you larps, and skids..";
                 } else if (command === "ipconfig") {
                     response = "IPv4 Address: 192.168.1.101<br>Subnet Mask: 255.255.255.0<br>Default Gateway: 192.168.1.1";
                 }
