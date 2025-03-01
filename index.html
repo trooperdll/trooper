@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>flank is just a skid</title>
+    <title>flank801 is a skid</title>
     <style>
         body {
             background-color: black;
@@ -13,15 +13,21 @@
             overflow: hidden;
         }
 
-        /* ASCII Star Background */
+        /* ASCII "flank801" at the Top */
         #ascii-container {
             position: fixed;
-            top: 50%;
+            top: 5%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 12px;
+            transform: translateX(-50%);
+            font-size: 14px;
             white-space: pre;
             font-weight: bold;
+            animation: blink 1s infinite alternate;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0.3; }
         }
 
         /* Centered Link */
@@ -63,27 +69,23 @@
 </head>
 <body>
 
-    <!-- ASCII Art Background -->
+    <!-- ASCII Art "flank801" at the Top -->
     <div id="ascii-container"></div>
 
     <!-- Centered Redirect Link -->
-    <a id="redirect-link" href="https://doxbin.org/user/Cxxz">Enter</a>
+    <a id="redirect-link" href="https://example.com">Enter</a>
 
     <script>
-        // Generate ASCII Star Field
-        function generateStars() {
-            let stars = "";
-            for (let i = 0; i < 600; i++) { // More dense stars
-                stars += Math.random() > 0.7 ? "*" : " ";
-                if (i % 100 === 0) stars += "\n"; // Formatting
-            }
-            return stars;
-        }
+        // ASCII Art of "flank801"
+        const asciiText = `
+        ******  **       **  **    **  *******  
+        **       **       **  **    **  **       
+        ******   **   *   **  **    **  *****    
+        **       **  ***  **  **    **  **       
+        **       ** ***** **  ********  *******  
+        `;
 
-        document.getElementById("ascii-container").innerText = generateStars();
-        setInterval(() => {
-            document.getElementById("ascii-container").innerText = generateStars();
-        }, 1000); // Update every second
+        document.getElementById("ascii-container").innerText = asciiText;
 
         // Snowfall Effect
         function createSnowflake() {
