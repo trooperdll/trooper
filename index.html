@@ -11,26 +11,23 @@
             font-family: 'Courier New', monospace;
             text-align: center;
             overflow: hidden;
-            cursor: crosshair;
         }
 
-        /* ASCII Art Container with Smooth Movement */
+        /* ASCII "flank801" at the Top */
         #ascii-container {
             position: fixed;
             top: 5%;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 14px;
+            font-size: 10px;
             white-space: pre;
             font-weight: bold;
-            text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.3), -2px -2px 5px rgba(255, 255, 255, 0.3);
-            animation: ascii-move 2s infinite alternate ease-in-out;
+            animation: blink 1s infinite alternate;
         }
 
-        @keyframes ascii-move {
-            0% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(3px); }
-            100% { transform: translateX(-50%) translateY(0); }
+        @keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0.3; }
         }
 
         /* Centered Link */
@@ -46,7 +43,6 @@
             padding: 10px 20px;
             transition: 0.3s;
             opacity: 0.7;
-            background: rgba(255, 255, 255, 0.1);
         }
 
         #redirect-link:hover {
@@ -55,7 +51,6 @@
             opacity: 1;
         }
 
-        /* Blizzard Effect */
         .snowflake {
             position: fixed;
             top: -10px;
@@ -74,24 +69,29 @@
     </style>
 </head>
 <body>
-    <div id="ascii-container">
-        @@@@@@@@  @@@        @@@@@@   @@@  @@@  @@@  @@@  
-        @@@@@@@@  @@@       @@@@@@@@  @@@@ @@@  @@@  @@@  
-        @@!       @@!       @@!  @@@  @@!@!@@@  @@!  !@@  
-        !@!       !@!       !@!  @!@  !@!!@!@!  !@!  @!!  
-        @!!!:!    @!!       @!@!@!@!  @!@ !!@!  @!@@!@!   
-        !!!!!:    !!!       !!!@!!!!  !@!  !!!  !!@!!!    
-        !!:       !!:       !!:  !!!  !!:  !!!  !!: :!!   
-        :!:        :!:      :!:  !:!  :!:  !:!  :!:  !:!  
-         ::        :: ::::  ::   :::   ::   ::   ::  :::  
-         :        : :: : :   :   : :  ::    :    :   :::  
-    </div>
-    
+
+    <div id="ascii-container"></div>
+
+    flank801
     <a id="redirect-link" href="https://doxbin.org/user/Cxxz">lol</a>
 
-    <script src="script.js"></script>
     <script>
-        // Blizzard Effect
+        const asciiText = `
+@@@@@@@   @@@  @@@  @@@  @@@  @@@  
+@@@@@@@   @@@  @@@  @@@  @@@  @@@  
+@@!  @@@  @@!  !@@  @@!  @@@  @@!  
+!@!  @!@  !@!  @!!  !@!  @!@  !@!  
+@!@@!@!   @!@@!@!   @!@!@!@!  @!!  
+!!@!!!    !!@!!!    !!!@!!!!  !!!  
+!!:       !!: :!!   !!:  !!!  !!:  
+:!:       :!:  !:!  :!:  !:!   :!:  
+ ::        ::  :::   ::   :::  :::  
+ :        ::   :::   :    : :  :::  
+        `;
+
+        document.getElementById("ascii-container").innerText = asciiText;
+
+        // Snowfall Effect
         function createSnowflake() {
             const snowflake = document.createElement("div");
             snowflake.innerHTML = "*";
@@ -100,15 +100,16 @@
 
             // Random position and speed
             snowflake.style.left = Math.random() * window.innerWidth + "px";
-            snowflake.style.animationDuration = (Math.random() * 2 + 1) + "s";
+            snowflake.style.animationDuration = (Math.random() * 3 + 2) + "s";
             snowflake.style.opacity = Math.random();
 
             setTimeout(() => {
                 snowflake.remove();
-            }, 3000); // Remove after falling
+            }, 5000);
         }
 
-        setInterval(createSnowflake, 50); // Blizzard effect with heavy snowfall
+        setInterval(createSnowflake, 200);
+
     </script>
 </body>
 </html>
