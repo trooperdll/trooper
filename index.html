@@ -34,17 +34,17 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 3rem;
+            font-size: 2rem; /* Made smaller */
             color: white;
             text-decoration: none;
             opacity: 0.7;
-            text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red, 0 0 40px red;
+            text-shadow: none; /* Removed red glow */
             transition: 0.3s;
         }
 
         #redirect-link:hover {
             opacity: 1;
-            text-shadow: 0 0 10px white, 0 0 20px white, 0 0 30px white, 0 0 40px white;
+            text-shadow: none;
         }
 
         .snowflake {
@@ -132,15 +132,6 @@
             setTimeout(() => { snowflake.remove(); }, 5000);
         }
         setInterval(createSnowflake, 100);
-
-        const messages = [
-            "skid",
-            "flank",
-            "lol",
-            "flank",
-            "skid"
-        ];
-        document.getElementById("typing-message").innerText = messages[Math.floor(Math.random() * messages.length)];
     </script>
 </body>
 </html>
