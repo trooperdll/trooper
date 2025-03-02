@@ -13,7 +13,6 @@
             overflow: hidden;
         }
 
-    
         #ascii-container {
             position: fixed;
             top: 5%;
@@ -30,7 +29,6 @@
             100% { opacity: 0.3; }
         }
 
-   
         #redirect-link {
             position: fixed;
             top: 50%;
@@ -66,14 +64,41 @@
                 transform: translateY(100vh);
             }
         }
+
+        #clock {
+            position: fixed;
+            top: 90%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
+        }
+
+        #typing-message {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid white;
+            width: 0;
+            animation: typing 3s steps(40, end) forwards, blinkCursor 0.8s infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blinkCursor {
+            50% { border-color: transparent; }
+        }
     </style>
 </head>
 <body>
 
     <div id="ascii-container"></div>
-
-    
     <a id="redirect-link" href="https://doxbin.org/user/Cxxz">lol</a>
+    <div id="clock"></div>
+    <div id="typing-message"></div>
 
     <script>
         const asciiText = `
@@ -84,30 +109,40 @@
   +#+        +#+        +#+     +#+ +#+  +#+#+# +#+  +#+       
  #+#        #+#        #+#     #+# #+#   #+#+# #+#   #+#       
 ###        ########## ###     ### ###    #### ###    ###       
-                                                             
+                                                              
         `;
-
         document.getElementById("ascii-container").innerText = asciiText;
 
-       
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById("clock").innerText = `Time: ${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
         function createSnowflake() {
             const snowflake = document.createElement("div");
             snowflake.innerHTML = "*";
             snowflake.classList.add("snowflake");
             document.body.appendChild(snowflake);
-
-            // Random position and speed
             snowflake.style.left = Math.random() * window.innerWidth + "px";
             snowflake.style.animationDuration = (Math.random() * 3 + 2) + "s";
             snowflake.style.opacity = Math.random();
-
-            setTimeout(() => {
-                snowflake.remove();
-            }, 5000);
+            setTimeout(() => { snowflake.remove(); }, 5000);
         }
-
         setInterval(createSnowflake, 100);
 
+        const messages = [
+            "skid",
+            "larp",
+            "lol",
+            "sniffer",
+            "skid"
+        ];
+        document.getElementById("typing-message").innerText = messages[Math.floor(Math.random() * messages.length)];
     </script>
 </body>
 </html>
