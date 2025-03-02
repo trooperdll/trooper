@@ -18,7 +18,7 @@
             top: 5%;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 10px;
+            font-size: min(3vw, 10px);
             white-space: pre;
             font-weight: bold;
             animation: blink 1s infinite alternate;
@@ -34,7 +34,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 2rem; 
+            font-size: min(5vw, 2rem);
             color: white;
             text-decoration: none;
             opacity: 0.7;
@@ -51,7 +51,7 @@
             position: fixed;
             top: -10px;
             color: white;
-            font-size: 10px;
+            font-size: min(3vw, 10px);
             user-select: none;
             pointer-events: none;
             animation: snowfall linear infinite;
@@ -68,12 +68,12 @@
             bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 1.2rem;
+            font-size: min(4vw, 1.2rem);
         }
 
         #typing-message {
             margin-top: 20px;
-            font-size: 1.2rem;
+            font-size: min(4vw, 1.2rem);
             white-space: nowrap;
             overflow: hidden;
             border-right: 2px solid white;
@@ -92,7 +92,6 @@
     </style>
 </head>
 <body>
-
     <div id="ascii-container"></div>
     <a id="redirect-link" href="https://doxbin.org/user/Cxxz">lol</a>
     <div id="clock"></div>
@@ -131,9 +130,7 @@
             snowflake.style.opacity = Math.random();
             setTimeout(() => { snowflake.remove(); }, 5000);
         }
-        setInterval(createSnowflake, 100);
-    
-  
+        setInterval(createSnowflake, 60);
     </script>
 </body>
 </html>
